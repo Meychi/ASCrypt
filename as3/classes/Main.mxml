@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" ?>
+<mx:Application horizontalAlign="center" verticalAlign="middle" xmlns:mx="http://www.adobe.com/2006/mxml">
+	
+	<mx:Script source="Main.as" />
+	<mx:Panel id="wrapper" title="ASCrypt Console" width="100%" height="100%">
+		<mx:TextArea id="console" fontSize="12" fontFamily="Consolas" fontWeight="bold" editable="false" wordWrap="false" width="100%" height="100%" initialize="onInitialize()" />
+	</mx:Panel>
+	
+</mx:Application>

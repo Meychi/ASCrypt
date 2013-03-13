@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual C# Express 2008
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ASCrypt", "ASCrypt\ASCrypt.csproj", "{23A2403F-F9F0-40ED-B661-EFCF574236A8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ASConsole", "ASConsole\ASConsole.csproj", "{BC831A22-F487-45CA-BB61-B13404947F5E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{23A2403F-F9F0-40ED-B661-EFCF574236A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{23A2403F-F9F0-40ED-B661-EFCF574236A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{23A2403F-F9F0-40ED-B661-EFCF574236A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{23A2403F-F9F0-40ED-B661-EFCF574236A8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BC831A22-F487-45CA-BB61-B13404947F5E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BC831A22-F487-45CA-BB61-B13404947F5E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BC831A22-F487-45CA-BB61-B13404947F5E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BC831A22-F487-45CA-BB61-B13404947F5E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
