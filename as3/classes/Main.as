@@ -9,11 +9,16 @@ import org.ascrypt.encoding.*;
 import org.ascrypt.utilities.*;
 
 /**
+* Private properties of the class.
+*/
+private var log:String = "";
+
+/**
 * Write line to the console.
 */
 public function writeLine(msg:String):void
 {
-	console.htmlText += msg + "\n";
+	log += msg + "\n";
 }
 
 /**
@@ -31,7 +36,7 @@ public function testAlgorithms():void
 {
 	try 
 	{
-		var start:Number = getTimer();
+		var start:int = getTimer();
 		
 		/**
 		* Input length is 17 chars but 19 bytes.
@@ -274,8 +279,9 @@ public function testAlgorithms():void
 		/**
 		* Print timing results.
 		*/
-		var end:Number = getTimer();
+		var end:int = getTimer();
 		writeLine("All this took: " + (end - start) + " milliseconds.");
+		console.htmlText = log;
 	} 
 	catch (e:Error)
 	{

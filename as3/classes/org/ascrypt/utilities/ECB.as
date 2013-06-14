@@ -14,7 +14,7 @@
 		* @param crypt The encryption function.
 		* @return An array of ECB mode encrypted bytes.
 		*/
-		public static function encrypt(key:Array, bytes:Array, size:Number, encrypt:Function):Array
+		public static function encrypt(key:Array, bytes:Array, size:int, encrypt:Function):Array
 		{
 			return core(key, bytes, size, encrypt);
 		}
@@ -27,7 +27,7 @@
 		* @param decrypt The decryption function.
 		* @return An array of ECB mode decrypted bytes.
 		*/
-		public static function decrypt(key:Array, bytes:Array, size:Number, decrypt:Function):Array
+		public static function decrypt(key:Array, bytes:Array, size:int, decrypt:Function):Array
 		{
 			return core(key, bytes, size, decrypt);
 		}
@@ -35,7 +35,7 @@
 		/**
 		* Private static methods of the class.
 		*/
-		private static function core(k:Array, b:Array, s:Number, c:Function):Array
+		private static function core(k:Array, b:Array, s:int, c:Function):Array
 		{
 			var r:Array = [];
 			var l:int = b.length;

@@ -15,7 +15,7 @@
 		* @param iv An array of init vector bytes.
 		* @return An array of CBC mode encrypted bytes.
 		*/
-		public static function encrypt(key:Array, bytes:Array, size:Number, encrypt:Function, iv:Array):Array
+		public static function encrypt(key:Array, bytes:Array, size:int, encrypt:Function, iv:Array):Array
 		{
 			var r:Array = [];
 			var l:int = bytes.length;
@@ -40,7 +40,7 @@
 		* @param iv An array of init vector bytes.
 		* @return An array of CBC mode decrypted bytes.
 		*/
-		public static function decrypt(key:Array, bytes:Array, size:Number, decrypt:Function, iv:Array):Array
+		public static function decrypt(key:Array, bytes:Array, size:int, decrypt:Function, iv:Array):Array
 		{
 			var l:int = bytes.length;
 			var t:Array, r:Array = [];

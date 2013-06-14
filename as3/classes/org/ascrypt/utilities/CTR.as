@@ -15,7 +15,7 @@
 		* @param iv An array of init vector bytes.
 		* @return An array of CTR mode encrypted bytes.
 		*/
-		public static function encrypt(key:Array, bytes:Array, size:Number, encrypt:Function, iv:Array):Array
+		public static function encrypt(key:Array, bytes:Array, size:int, encrypt:Function, iv:Array):Array
 		{
 			return core(key, bytes, size, encrypt, iv);
 		}
@@ -29,7 +29,7 @@
 		* @param iv An array of init vector bytes.
 		* @return An array of CTR mode decrypted bytes.
 		*/
-		public static function decrypt(key:Array, bytes:Array, size:Number, encrypt:Function, iv:Array):Array
+		public static function decrypt(key:Array, bytes:Array, size:int, encrypt:Function, iv:Array):Array
 		{
 			return core(key, bytes, size, encrypt, iv);
 		}
@@ -37,7 +37,7 @@
 		/**
 		* Private static methods of the class.
 		*/
-		private static function core(k:Array, b:Array, s:Number, c:Function, v:Array):Array
+		private static function core(k:Array, b:Array, s:int, c:Function, v:Array):Array
 		{
 			var bl:int = b.length;
 			var e:Array = [], x:Array = v.concat();

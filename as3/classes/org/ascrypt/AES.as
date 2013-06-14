@@ -125,7 +125,7 @@ package org.ascrypt
 				{
 					t = [sbox[t[0]], sbox[t[1]], sbox[t[2]], sbox[t[3]]];
 				}      
-				for (var j:Number = 0; j < 4; j++)
+				for (var j:int = 0; j < 4; j++)
 				{
 					k[i + j] = k[i + j - kl] ^ t[j];
 				}

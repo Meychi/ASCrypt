@@ -31,7 +31,7 @@
 		public static function bytesToText(bytes:Array):String
 		{
 			var l:int = bytes.length;
-			var c:Number, s:String = new String("");
+			var c:int, s:String = new String("");
 			for (var i:int = 0; i < l; i += 2)
 			{
 				c = (bytes[i] << 8) | (bytes[i + 1] & 0xFF);

@@ -6,6 +6,10 @@ AS3 library:
 
 * The project has been developed with FlashDevevelop IDE and Flex SDK.
 
+Haxe library:
+
+* The project has been developed with FlashDevevelop IDE and Haxe 3 targeting Flash.
+
 PHP library:
 
 * Tested only with PHP5, not sure does it work with PHP4.
@@ -15,4 +19,4 @@ PHP library:
 CSharp library:
 
 * The library requires Microsoft.NET 2.0 framework.
-* The project has been developed with Visual C# 2008 Express.
+* The project has been developed with Visual C# 2010 Express.

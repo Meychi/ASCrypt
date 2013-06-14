@@ -30,6 +30,11 @@ include_once("classes/padding/PKCS7.php");
 include_once("classes/padding/ZEROS.php");
 
 /**
+* Report only errors.
+*/
+error_reporting(E_ERROR);
+
+/**
 * Boolean to boolean string.
 */
 function bool_str($bool)
