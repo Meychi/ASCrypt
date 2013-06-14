@@ -143,7 +143,7 @@ class Main
 			/**
 			* Test ROT13 encoding.
 			*/
-			var r13enc:Array<Int> = ROT13.encode(utf8Bytes); //OPTIMIZE?
+			var r13enc:Array<Int> = ROT13.encode(utf8Bytes);
 			var r13dec:Array<Int> = ROT13.decode(r13enc);
 			
 			writeLine("ROT13 encoded in UTF-8: " + UTF8.bytesToText(r13enc));
