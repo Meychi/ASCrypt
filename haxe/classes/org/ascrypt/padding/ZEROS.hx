@@ -12,7 +12,7 @@ class ZEROS
 	* @param size The block size to pad to.
 	* @return An array of padded bytes.
 	*/
-	public static inline function pad(bytes:Array<Int>, size:Int):Array<Int>
+	public static function pad(bytes:Array<Int>, size:Int):Array<Int>
 	{
 		var c:Array<Int> = bytes.concat([]);
 		while (c.length % size != 0) c[c.length] = 0;
@@ -24,7 +24,7 @@ class ZEROS
 	* @param bytes An array of padded bytes.
 	* @return An array of unpadded bytes.
 	*/
-	public static inline function unpad(bytes:Array<Int>):Array<Int>
+	public static function unpad(bytes:Array<Int>):Array<Int>
 	{
 		var c:Array<Int> = bytes.concat([]);
 		while (c[c.length - 1] == 0) c.pop();

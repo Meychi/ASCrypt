@@ -15,9 +15,9 @@ class AES
 	/**
 	* Private error messages of the class.
 	*/
-	private static inline var ERROR_KEY:String = "Invalid key size. Key size needs to be either 128, 192 or 256 bits.\n";
-	private static inline var ERROR_MODE:String = "Invalid mode of operation. Supported modes are ECB, CBC, CTR or NONE.\n";
-	private static inline var ERROR_BLOCK:String = "Invalid block size. Block size is fixed at 128 bits.\n";
+	private static var ERROR_KEY:String = "Invalid key size. Key size needs to be either 128, 192 or 256 bits.\n";
+	private static var ERROR_MODE:String = "Invalid mode of operation. Supported modes are ECB, CBC, CTR or NONE.\n";
+	private static var ERROR_BLOCK:String = "Invalid block size. Block size is fixed at 128 bits.\n";
 	
 	/**
 	* Private properties of the class.

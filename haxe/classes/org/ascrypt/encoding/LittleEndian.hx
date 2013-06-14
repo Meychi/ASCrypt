@@ -11,7 +11,7 @@ class LittleEndian
 	* @param text An ASCII or UTF-8 encoded string.
 	* @return An array of UTF-16 LE bytes.
 	*/
-	public static inline function textToBytes(text:String):Array<Int>
+	public static function textToBytes(text:String):Array<Int>
 	{
 		var b:Array<Int> = [];
 		var i:Int = 0, l:Int = text.length * 2;
@@ -29,7 +29,7 @@ class LittleEndian
 	* @param bytes An array of UTF-16 LE bytes.
 	* @return An UTF-16 LE encoded string.
 	*/
-	public static inline function bytesToText(bytes:Array<Int>):String
+	public static function bytesToText(bytes:Array<Int>):String
 	{
 		var l:Int = bytes.length;
 		var c:Int, i:Int = 0, s:String = "";

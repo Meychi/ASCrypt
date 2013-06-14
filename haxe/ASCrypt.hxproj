@@ -4,12 +4,12 @@
   <output>
     <movie outputType="Application" />
     <movie input="" />
-    <movie path="binary/ASCrypt.swf" />
+    <movie path="binary\as3\ASCrypt.swf" />
     <movie fps="60" />
     <movie width="800" />
     <movie height="600" />
     <movie version="11" />
-    <movie minorVersion="7" />
+    <movie minorVersion="1" />
     <movie platform="Flash Player" />
     <movie background="#FFFFFF" />
     <movie preferredSDK="Haxe 3.0.0;3.0.0;" />
@@ -45,7 +45,7 @@
   <!-- Executed before build -->
   <preBuildCommand />
   <!-- Executed after build -->
-  <postBuildCommand alwaysRun="False" />
+  <postBuildCommand alwaysRun="False">BuildOthers.bat</postBuildCommand>
   <!-- Other project options -->
   <options>
     <option showHiddenPaths="False" />

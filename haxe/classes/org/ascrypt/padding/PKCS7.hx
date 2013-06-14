@@ -19,7 +19,7 @@ class PKCS7
 	* @param size The block size to pad to.
 	* @return An array of padded bytes.
 	*/
-	public static inline function pad(bytes:Array<Int>, size:Int):Array<Int>
+	public static function pad(bytes:Array<Int>, size:Int):Array<Int>
 	{
 		var c:Array<Int> = bytes.concat([]);
 		var s:Int = size - c.length % size;
@@ -32,7 +32,7 @@ class PKCS7
 	* @param bytes An array of padded bytes.
 	* @return An array of unpadded bytes.
 	*/
-	public static inline function unpad(bytes:Array<Int>):Array<Int>
+	public static function unpad(bytes:Array<Int>):Array<Int>
 	{
 		var c:Array<Int> = bytes.concat([]);
 		var v:Int, s:Int = c[c.length - 1];

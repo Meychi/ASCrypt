@@ -16,7 +16,7 @@ class ARC4
 	/**
 	* Private error messages constants of the class.
 	*/
-	private static inline var ERROR_KEY:String = "Invalid key size. Key size needs to be 40 - 128 bits.\n";
+	private static var ERROR_KEY:String = "Invalid key size. Key size needs to be 40 - 128 bits.\n";
 	
 	/**
 	* Encrypts bytes with the specified key.

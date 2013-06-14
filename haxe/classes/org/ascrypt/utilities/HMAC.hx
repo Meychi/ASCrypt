@@ -14,7 +14,7 @@ class HMAC
 	* @param size The input size of the hash.
 	* @return An array of HMAC bytes.
 	*/
-	public static inline function compute(key:Array<Int>, bytes:Array<Int>, hash:Dynamic, size:Int):Array<Int>
+	public static function compute(key:Array<Int>, bytes:Array<Int>, hash:Dynamic, size:Int):Array<Int>
 	{
 		var hk:Array<Int> = key.concat([]);
 		var ik:Array<Int> = [], ok:Array<Int> = [];

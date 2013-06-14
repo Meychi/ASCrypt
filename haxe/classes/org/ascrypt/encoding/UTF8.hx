@@ -11,7 +11,7 @@ class UTF8
 	* @param text An ASCII or UTF-8 encoded string.
 	* @return An array of single byte values.
 	*/
-	public static inline function textToBytes(text:String):Array<Int>
+	public static function textToBytes(text:String):Array<Int>
 	{
 		var l:Int = text.length;
 		var c:Int, p:Int = 0, b:Array<Int> = [];
@@ -53,7 +53,7 @@ class UTF8
 	* @param bytes An array of single byte values.
 	* @return An ASCII or UTF-8 encoded string.
 	*/
-	public static inline function bytesToText(bytes:Array<Int>):String
+	public static function bytesToText(bytes:Array<Int>):String
 	{
 		var i:Int = 0;
 		var l:Int = bytes.length;

@@ -12,8 +12,8 @@ class XXTEA
 	/**
 	* Private error messages of the class.
 	*/
-	private static inline var ERROR_KEY:String = "Invalid key size. Key size is fixed at 128 bits.\n";
-	private static inline var ERROR_BLOCK:String = "Invalid block size. Minimum block size is 64 bits and the block size needs to be multiple of 32 bits.\n";
+	private static var ERROR_KEY:String = "Invalid key size. Key size is fixed at 128 bits.\n";
+	private static var ERROR_BLOCK:String = "Invalid block size. Minimum block size is 64 bits and the block size needs to be multiple of 32 bits.\n";
 	
 	/**
 	* Encrypts bytes with the specified key.

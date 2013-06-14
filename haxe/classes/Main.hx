@@ -1,6 +1,5 @@
 package;
 
-import flash.Lib;
 import org.ascrypt.AES;
 import org.ascrypt.MD5;
 import org.ascrypt.ARC4;
@@ -35,6 +34,11 @@ class Main
 	private var log:String = "";
 	
 	/**
+	* Creates a new instance of the class.
+	*/
+	public function new():Void {}
+	
+	/**
 	* Entry point of the application.
 	*/
 	public static function main():Void
@@ -44,18 +48,21 @@ class Main
 	}
 	
 	/**
-	* Creates a new instance of the class.
-	*/
-	public function new():Void {}
-	
-	/**
-	* Write line to the console.
+	* Appends a line to the log.
 	*/
 	public function writeLine(msg:String):Void
 	{
 		this.log += msg + "\n";
 	}
-
+	
+	/**
+	* Gets the current time in milliseconds.
+	*/
+	public function getTimer():Float
+	{
+		return Date.now().getTime();
+	}
+	
 	/**
 	* Test all ASCrypt main classes.
 	*/
@@ -63,7 +70,7 @@ class Main
 	{
 		try 
 		{
-			var start:Int = Lib.getTimer();
+			var start:Float = getTimer();
 			
 			/**
 			* Input length is 17 chars but 19 bytes.
@@ -306,7 +313,7 @@ class Main
 			/**
 			* Print timing results.
 			*/
-			var end:Int = Lib.getTimer();
+			var end:Float = getTimer();
 			writeLine("All this took: " + (end - start) + " milliseconds.");
 			trace(log);
 		}
