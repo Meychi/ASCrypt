@@ -8,7 +8,7 @@ AS3 library:
 
 Haxe library:
 
-* The project has been developed with FlashDevevelop IDE and Haxe 3 targeting Flash.
+* The project has been developed with FlashDevevelop IDE and Haxe 3 targeting Flash and JS.
 
 PHP library:
 
