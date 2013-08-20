@@ -276,8 +276,8 @@ org.ascrypt.AES.__name__ = true;
 org.ascrypt.AES.encrypt = function(key,bytes,mode,iv) {
 	if(mode == null) mode = "ecb";
 	org.ascrypt.AES.check(key,bytes);
-	var k = key.concat([]);
-	var b = bytes.concat([]);
+	var k = key.slice();
+	var b = bytes.slice();
 	org.ascrypt.AES.init();
 	org.ascrypt.AES.ek(k);
 	var _g = mode.toLowerCase();
@@ -285,9 +285,9 @@ org.ascrypt.AES.encrypt = function(key,bytes,mode,iv) {
 	case org.ascrypt.common.OperationMode.ECB:
 		return org.ascrypt.utilities.ECB.encrypt(k,b,16,org.ascrypt.AES.ie);
 	case org.ascrypt.common.OperationMode.CBC:
-		return org.ascrypt.utilities.CBC.encrypt(k,b,16,org.ascrypt.AES.ie,iv.concat([]));
+		return org.ascrypt.utilities.CBC.encrypt(k,b,16,org.ascrypt.AES.ie,iv.slice());
 	case org.ascrypt.common.OperationMode.CTR:
-		return org.ascrypt.utilities.CTR.encrypt(k,b,16,org.ascrypt.AES.ie,iv.concat([]));
+		return org.ascrypt.utilities.CTR.encrypt(k,b,16,org.ascrypt.AES.ie,iv.slice());
 	case org.ascrypt.common.OperationMode.NONE:
 		return org.ascrypt.AES.ie(k,b);
 	default:
@@ -297,8 +297,8 @@ org.ascrypt.AES.encrypt = function(key,bytes,mode,iv) {
 org.ascrypt.AES.decrypt = function(key,bytes,mode,iv) {
 	if(mode == null) mode = "ecb";
 	org.ascrypt.AES.check(key,bytes);
-	var k = key.concat([]);
-	var b = bytes.concat([]);
+	var k = key.slice();
+	var b = bytes.slice();
 	org.ascrypt.AES.init();
 	org.ascrypt.AES.ek(k);
 	var _g = mode.toLowerCase();
@@ -306,9 +306,9 @@ org.ascrypt.AES.decrypt = function(key,bytes,mode,iv) {
 	case org.ascrypt.common.OperationMode.ECB:
 		return org.ascrypt.utilities.ECB.decrypt(k,b,16,org.ascrypt.AES.id);
 	case org.ascrypt.common.OperationMode.CBC:
-		return org.ascrypt.utilities.CBC.decrypt(k,b,16,org.ascrypt.AES.id,iv.concat([]));
+		return org.ascrypt.utilities.CBC.decrypt(k,b,16,org.ascrypt.AES.id,iv.slice());
 	case org.ascrypt.common.OperationMode.CTR:
-		return org.ascrypt.utilities.CTR.decrypt(k,b,16,org.ascrypt.AES.ie,iv.concat([]));
+		return org.ascrypt.utilities.CTR.decrypt(k,b,16,org.ascrypt.AES.ie,iv.slice());
 	case org.ascrypt.common.OperationMode.NONE:
 		return org.ascrypt.AES.id(k,b);
 	default:
@@ -351,7 +351,7 @@ org.ascrypt.AES.ark = function(s,r) {
 	}
 }
 org.ascrypt.AES.sr = function(s,t) {
-	var h = s.concat([]);
+	var h = s.slice();
 	var _g = 0;
 	while(_g < 16) {
 		var i = _g++;
@@ -388,7 +388,7 @@ org.ascrypt.AES.ek = function(k) {
 	}
 }
 org.ascrypt.AES.ie = function(k,ob) {
-	var b = ob.concat([]);
+	var b = ob.slice();
 	var i = 16, l = k.length;
 	org.ascrypt.AES.ark(b,k.slice(0,16));
 	while(i < l - 16) {
@@ -404,7 +404,7 @@ org.ascrypt.AES.ie = function(k,ob) {
 	return b;
 }
 org.ascrypt.AES.id = function(k,ob) {
-	var b = ob.concat([]);
+	var b = ob.slice();
 	var l = k.length;
 	var i = l - 32;
 	org.ascrypt.AES.ark(b,k.slice(l - 16,l));
@@ -1095,7 +1095,7 @@ org.ascrypt.padding = {}
 org.ascrypt.padding.PKCS7 = function() { }
 org.ascrypt.padding.PKCS7.__name__ = true;
 org.ascrypt.padding.PKCS7.pad = function(bytes,size) {
-	var c = bytes.concat([]);
+	var c = bytes.slice();
 	var s = size - c.length % size;
 	var _g = 0;
 	while(_g < s) {
@@ -1105,7 +1105,7 @@ org.ascrypt.padding.PKCS7.pad = function(bytes,size) {
 	return c;
 }
 org.ascrypt.padding.PKCS7.unpad = function(bytes) {
-	var c = bytes.concat([]);
+	var c = bytes.slice();
 	var v, s = c[c.length - 1];
 	var _g = 0;
 	while(_g < s) {
@@ -1119,12 +1119,12 @@ org.ascrypt.padding.PKCS7.unpad = function(bytes) {
 org.ascrypt.padding.ZEROS = function() { }
 org.ascrypt.padding.ZEROS.__name__ = true;
 org.ascrypt.padding.ZEROS.pad = function(bytes,size) {
-	var c = bytes.concat([]);
+	var c = bytes.slice();
 	while(c.length % size != 0) c[c.length] = 0;
 	return c;
 }
 org.ascrypt.padding.ZEROS.unpad = function(bytes) {
-	var c = bytes.concat([]);
+	var c = bytes.slice();
 	while(c[c.length - 1] == 0) c.pop();
 	return c;
 }
@@ -1174,7 +1174,7 @@ org.ascrypt.utilities.CTR.decrypt = function(key,bytes,size,encrypt,iv) {
 }
 org.ascrypt.utilities.CTR.core = function(k,b,s,c,v) {
 	var bl = b.length;
-	var e = [], x = v.concat([]);
+	var e = [], x = v.slice();
 	var i = 0;
 	while(i < bl) {
 		e = c(k,x);
@@ -1214,7 +1214,7 @@ org.ascrypt.utilities.ECB.core = function(k,b,s,c) {
 org.ascrypt.utilities.HMAC = function() { }
 org.ascrypt.utilities.HMAC.__name__ = true;
 org.ascrypt.utilities.HMAC.compute = function(key,bytes,hash,size) {
-	var hk = key.concat([]);
+	var hk = key.slice();
 	var ik = [], ok = [];
 	if(key.length > size) hk = hash(key);
 	while(hk.length < size) hk[hk.length] = 0;

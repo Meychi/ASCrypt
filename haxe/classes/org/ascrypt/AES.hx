@@ -39,14 +39,14 @@ class AES
 	public static function encrypt(key:Array<Int>, bytes:Array<Int>, mode:String = "ecb", iv:Array<Int> = null):Array<Int>
 	{
 		check(key, bytes);
-		var k:Array<Int> = key.concat([]);
-		var b:Array<Int> = bytes.concat([]);
+		var k:Array<Int> = key.copy();
+		var b:Array<Int> = bytes.copy();
 		init(); ek(k); // Initialize...
 		switch (mode.toLowerCase()) 
 		{
 			case OperationMode.ECB : return ECB.encrypt(k, b, 16, ie);
-			case OperationMode.CBC : return CBC.encrypt(k, b, 16, ie, iv.concat([]));
-			case OperationMode.CTR : return CTR.encrypt(k, b, 16, ie, iv.concat([]));
+			case OperationMode.CBC : return CBC.encrypt(k, b, 16, ie, iv.copy());
+			case OperationMode.CTR : return CTR.encrypt(k, b, 16, ie, iv.copy());
 			case OperationMode.NONE : return ie(k, b); // Encrypt in core more...
 			default : throw ERROR_MODE;
 		}
@@ -63,14 +63,14 @@ class AES
 	public static function decrypt(key:Array<Int>, bytes:Array<Int>, mode:String = "ecb", iv:Array<Int> = null):Array<Int>
 	{
 		check(key, bytes);
-		var k:Array<Int> = key.concat([]);
-		var b:Array<Int> = bytes.concat([]);
+		var k:Array<Int> = key.copy();
+		var b:Array<Int> = bytes.copy();
 		init(); ek(k); // Initialize...
 		switch (mode.toLowerCase())
 		{
 			case OperationMode.ECB : return ECB.decrypt(k, b, 16, id);
-			case OperationMode.CBC : return CBC.decrypt(k, b, 16, id, iv.concat([]));
-			case OperationMode.CTR : return CTR.decrypt(k, b, 16, ie, iv.concat([]));
+			case OperationMode.CBC : return CBC.decrypt(k, b, 16, id, iv.copy());
+			case OperationMode.CTR : return CTR.decrypt(k, b, 16, ie, iv.copy());
 			case OperationMode.NONE : return id(k, b); // Decrypt in core more...
 			default : throw ERROR_MODE;
 		}
@@ -102,7 +102,7 @@ class AES
 	}
 	private static function sr(s:Array<Int>, t:Array<Int>):Void
 	{
-		var h:Array<Int> = s.concat([]);
+		var h:Array<Int> = s.copy();
 		for (i in 0...16) s[i] = h[t[i]];
 	}
 	private static function ek(k:Array<Int>):Void
@@ -139,7 +139,7 @@ class AES
 	}
 	private static function ie(k:Array<Int>, ob:Array<Int>):Array<Int>
 	{
-		var b:Array<Int> = ob.concat([]);
+		var b:Array<Int> = ob.copy();
 		var i:Int = 16, l:Int = k.length;
 		ark(b, k.slice(0, 16));
 		while (i < l - 16)
@@ -154,7 +154,7 @@ class AES
 	}
 	private static function id(k:Array<Int>, ob:Array<Int>):Array<Int>
 	{
-		var b:Array<Int> = ob.concat([]);
+		var b:Array<Int> = ob.copy();
 		var l:Int = k.length;
 		var i:Int = l - 32;
 		ark(b, k.slice(l - 16, l));

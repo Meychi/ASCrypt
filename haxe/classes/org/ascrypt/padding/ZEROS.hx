@@ -14,7 +14,7 @@ class ZEROS
 	*/
 	public static function pad(bytes:Array<Int>, size:Int):Array<Int>
 	{
-		var c:Array<Int> = bytes.concat([]);
+		var c:Array<Int> = bytes.copy();
 		while (c.length % size != 0) c[c.length] = 0;
 		return c;
 	}
@@ -26,7 +26,7 @@ class ZEROS
 	*/
 	public static function unpad(bytes:Array<Int>):Array<Int>
 	{
-		var c:Array<Int> = bytes.concat([]);
+		var c:Array<Int> = bytes.copy();
 		while (c[c.length - 1] == 0) c.pop();
 		return c;
 	}

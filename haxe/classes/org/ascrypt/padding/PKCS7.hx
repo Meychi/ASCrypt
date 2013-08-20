@@ -21,7 +21,7 @@ class PKCS7
 	*/
 	public static function pad(bytes:Array<Int>, size:Int):Array<Int>
 	{
-		var c:Array<Int> = bytes.concat([]);
+		var c:Array<Int> = bytes.copy();
 		var s:Int = size - c.length % size;
 		for (i in 0...s) c[c.length] = s;
 		return c;
@@ -34,7 +34,7 @@ class PKCS7
 	*/
 	public static function unpad(bytes:Array<Int>):Array<Int>
 	{
-		var c:Array<Int> = bytes.concat([]);
+		var c:Array<Int> = bytes.copy();
 		var v:Int, s:Int = c[c.length - 1];
 		for (i in 0...s)
 		{

@@ -16,7 +16,7 @@ class HMAC
 	*/
 	public static function compute(key:Array<Int>, bytes:Array<Int>, hash:Dynamic, size:Int):Array<Int>
 	{
-		var hk:Array<Int> = key.concat([]);
+		var hk:Array<Int> = key.copy();
 		var ik:Array<Int> = [], ok:Array<Int> = [];
 		if (key.length > size) hk = hash(key);
 		while (hk.length < size) hk[hk.length] = 0;

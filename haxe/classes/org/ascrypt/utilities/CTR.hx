@@ -40,7 +40,7 @@ class CTR
 	private static function core(k:Array<Int>, b:Array<Int>, s:Int, c:Dynamic, v:Array<Int>):Array<Int>
 	{
 		var bl:Int = b.length;
-		var e:Array<Int> = [], x:Array<Int> = v.concat([]);
+		var e:Array<Int> = [], x:Array<Int> = v.copy();
 		var i:Int = 0;
 		while (i < bl)
 		{
