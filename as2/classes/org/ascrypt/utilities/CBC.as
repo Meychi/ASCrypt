@@ -24,7 +24,7 @@ class org.ascrypt.utilities.CBC
 				bytes[i + j] ^= iv[j];
 			}
 			r = r.concat(encrypt(key, bytes.slice(i, i + size)));
-			iv = r.slice(0, size);
+			iv = r.slice(i, i + size);
 		}
 		return r;
 	}
