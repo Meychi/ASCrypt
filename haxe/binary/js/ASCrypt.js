@@ -283,11 +283,11 @@ org.ascrypt.AES.encrypt = function(key,bytes,mode,iv) {
 	var _g = mode.toLowerCase();
 	switch(_g) {
 	case org.ascrypt.common.OperationMode.ECB:
-		return org.ascrypt.utilities.ECB.encrypt(k,b,16,org.ascrypt.AES.ie);
+		return org.ascrypt.utilities.ECB.core(k,b,16,org.ascrypt.AES.ie);
 	case org.ascrypt.common.OperationMode.CBC:
 		return org.ascrypt.utilities.CBC.encrypt(k,b,16,org.ascrypt.AES.ie,iv.slice());
 	case org.ascrypt.common.OperationMode.CTR:
-		return org.ascrypt.utilities.CTR.encrypt(k,b,16,org.ascrypt.AES.ie,iv.slice());
+		return org.ascrypt.utilities.CTR.core(k,b,16,org.ascrypt.AES.ie,iv.slice());
 	case org.ascrypt.common.OperationMode.NONE:
 		return org.ascrypt.AES.ie(k,b);
 	default:
@@ -304,11 +304,11 @@ org.ascrypt.AES.decrypt = function(key,bytes,mode,iv) {
 	var _g = mode.toLowerCase();
 	switch(_g) {
 	case org.ascrypt.common.OperationMode.ECB:
-		return org.ascrypt.utilities.ECB.decrypt(k,b,16,org.ascrypt.AES.id);
+		return org.ascrypt.utilities.ECB.core(k,b,16,org.ascrypt.AES.id);
 	case org.ascrypt.common.OperationMode.CBC:
 		return org.ascrypt.utilities.CBC.decrypt(k,b,16,org.ascrypt.AES.id,iv.slice());
 	case org.ascrypt.common.OperationMode.CTR:
-		return org.ascrypt.utilities.CTR.decrypt(k,b,16,org.ascrypt.AES.ie,iv.slice());
+		return org.ascrypt.utilities.CTR.core(k,b,16,org.ascrypt.AES.ie,iv.slice());
 	case org.ascrypt.common.OperationMode.NONE:
 		return org.ascrypt.AES.id(k,b);
 	default:
@@ -597,8 +597,8 @@ org.ascrypt.GUID.format = function(s) {
 org.ascrypt.MD5 = function() { }
 org.ascrypt.MD5.__name__ = true;
 org.ascrypt.MD5.compute = function(bytes) {
-	var b = org.ascrypt.utilities.UTIL.pack(bytes);
-	return org.ascrypt.utilities.UTIL.unpack(org.ascrypt.MD5.core(b,bytes.length * 8));
+	var b = org.ascrypt.utilities.UTIL.pack(bytes,null);
+	return org.ascrypt.utilities.UTIL.unpack(org.ascrypt.MD5.core(b,bytes.length * 8),null);
 }
 org.ascrypt.MD5.computeHMAC = function(key,bytes) {
 	return org.ascrypt.utilities.HMAC.compute(key,bytes,org.ascrypt.MD5.compute,64);
@@ -627,70 +627,70 @@ org.ascrypt.MD5.core = function(x,l) {
 		x[i + 15] |= 0;
 		var olda = a, oldb = b;
 		var oldc = c, oldd = d;
-		a = org.ascrypt.MD5.ff(a,b,c,d,x[i],7,-680876936);
-		d = org.ascrypt.MD5.ff(d,a,b,c,x[i + 1],12,-389564586);
-		c = org.ascrypt.MD5.ff(c,d,a,b,x[i + 2],17,606105819);
-		b = org.ascrypt.MD5.ff(b,c,d,a,x[i + 3],22,-1044525330);
-		a = org.ascrypt.MD5.ff(a,b,c,d,x[i + 4],7,-176418897);
-		d = org.ascrypt.MD5.ff(d,a,b,c,x[i + 5],12,1200080426);
-		c = org.ascrypt.MD5.ff(c,d,a,b,x[i + 6],17,-1473231341);
-		b = org.ascrypt.MD5.ff(b,c,d,a,x[i + 7],22,-45705983);
-		a = org.ascrypt.MD5.ff(a,b,c,d,x[i + 8],7,1770035416);
-		d = org.ascrypt.MD5.ff(d,a,b,c,x[i + 9],12,-1958414417);
-		c = org.ascrypt.MD5.ff(c,d,a,b,x[i + 10],17,-42063);
-		b = org.ascrypt.MD5.ff(b,c,d,a,x[i + 11],22,-1990404162);
-		a = org.ascrypt.MD5.ff(a,b,c,d,x[i + 12],7,1804603682);
-		d = org.ascrypt.MD5.ff(d,a,b,c,x[i + 13],12,-40341101);
-		c = org.ascrypt.MD5.ff(c,d,a,b,x[i + 14],17,-1502002290);
-		b = org.ascrypt.MD5.ff(b,c,d,a,x[i + 15],22,1236535329);
-		a = org.ascrypt.MD5.gg(a,b,c,d,x[i + 1],5,-165796510);
-		d = org.ascrypt.MD5.gg(d,a,b,c,x[i + 6],9,-1069501632);
-		c = org.ascrypt.MD5.gg(c,d,a,b,x[i + 11],14,643717713);
-		b = org.ascrypt.MD5.gg(b,c,d,a,x[i],20,-373897302);
-		a = org.ascrypt.MD5.gg(a,b,c,d,x[i + 5],5,-701558691);
-		d = org.ascrypt.MD5.gg(d,a,b,c,x[i + 10],9,38016083);
-		c = org.ascrypt.MD5.gg(c,d,a,b,x[i + 15],14,-660478335);
-		b = org.ascrypt.MD5.gg(b,c,d,a,x[i + 4],20,-405537848);
-		a = org.ascrypt.MD5.gg(a,b,c,d,x[i + 9],5,568446438);
-		d = org.ascrypt.MD5.gg(d,a,b,c,x[i + 14],9,-1019803690);
-		c = org.ascrypt.MD5.gg(c,d,a,b,x[i + 3],14,-187363961);
-		b = org.ascrypt.MD5.gg(b,c,d,a,x[i + 8],20,1163531501);
-		a = org.ascrypt.MD5.gg(a,b,c,d,x[i + 13],5,-1444681467);
-		d = org.ascrypt.MD5.gg(d,a,b,c,x[i + 2],9,-51403784);
-		c = org.ascrypt.MD5.gg(c,d,a,b,x[i + 7],14,1735328473);
-		b = org.ascrypt.MD5.gg(b,c,d,a,x[i + 12],20,-1926607734);
-		a = org.ascrypt.MD5.hh(a,b,c,d,x[i + 5],4,-378558);
-		d = org.ascrypt.MD5.hh(d,a,b,c,x[i + 8],11,-2022574463);
-		c = org.ascrypt.MD5.hh(c,d,a,b,x[i + 11],16,1839030562);
-		b = org.ascrypt.MD5.hh(b,c,d,a,x[i + 14],23,-35309556);
-		a = org.ascrypt.MD5.hh(a,b,c,d,x[i + 1],4,-1530992060);
-		d = org.ascrypt.MD5.hh(d,a,b,c,x[i + 4],11,1272893353);
-		c = org.ascrypt.MD5.hh(c,d,a,b,x[i + 7],16,-155497632);
-		b = org.ascrypt.MD5.hh(b,c,d,a,x[i + 10],23,-1094730640);
-		a = org.ascrypt.MD5.hh(a,b,c,d,x[i + 13],4,681279174);
-		d = org.ascrypt.MD5.hh(d,a,b,c,x[i],11,-358537222);
-		c = org.ascrypt.MD5.hh(c,d,a,b,x[i + 3],16,-722521979);
-		b = org.ascrypt.MD5.hh(b,c,d,a,x[i + 6],23,76029189);
-		a = org.ascrypt.MD5.hh(a,b,c,d,x[i + 9],4,-640364487);
-		d = org.ascrypt.MD5.hh(d,a,b,c,x[i + 12],11,-421815835);
-		c = org.ascrypt.MD5.hh(c,d,a,b,x[i + 15],16,530742520);
-		b = org.ascrypt.MD5.hh(b,c,d,a,x[i + 2],23,-995338651);
-		a = org.ascrypt.MD5.ii(a,b,c,d,x[i],6,-198630844);
-		d = org.ascrypt.MD5.ii(d,a,b,c,x[i + 7],10,1126891415);
-		c = org.ascrypt.MD5.ii(c,d,a,b,x[i + 14],15,-1416354905);
-		b = org.ascrypt.MD5.ii(b,c,d,a,x[i + 5],21,-57434055);
-		a = org.ascrypt.MD5.ii(a,b,c,d,x[i + 12],6,1700485571);
-		d = org.ascrypt.MD5.ii(d,a,b,c,x[i + 3],10,-1894986606);
-		c = org.ascrypt.MD5.ii(c,d,a,b,x[i + 10],15,-1051523);
-		b = org.ascrypt.MD5.ii(b,c,d,a,x[i + 1],21,-2054922799);
-		a = org.ascrypt.MD5.ii(a,b,c,d,x[i + 8],6,1873313359);
-		d = org.ascrypt.MD5.ii(d,a,b,c,x[i + 15],10,-30611744);
-		c = org.ascrypt.MD5.ii(c,d,a,b,x[i + 6],15,-1560198380);
-		b = org.ascrypt.MD5.ii(b,c,d,a,x[i + 13],21,1309151649);
-		a = org.ascrypt.MD5.ii(a,b,c,d,x[i + 4],6,-145523070);
-		d = org.ascrypt.MD5.ii(d,a,b,c,x[i + 11],10,-1120210379);
-		c = org.ascrypt.MD5.ii(c,d,a,b,x[i + 2],15,718787259);
-		b = org.ascrypt.MD5.ii(b,c,d,a,x[i + 9],21,-343485551);
+		a = org.ascrypt.MD5.rol(a + (b & c | ~b & d) + x[i] + -680876936,7) + b;
+		d = org.ascrypt.MD5.rol(d + (a & b | ~a & c) + x[i + 1] + -389564586,12) + a;
+		c = org.ascrypt.MD5.rol(c + (d & a | ~d & b) + x[i + 2] + 606105819,17) + d;
+		b = org.ascrypt.MD5.rol(b + (c & d | ~c & a) + x[i + 3] + -1044525330,22) + c;
+		a = org.ascrypt.MD5.rol(a + (b & c | ~b & d) + x[i + 4] + -176418897,7) + b;
+		d = org.ascrypt.MD5.rol(d + (a & b | ~a & c) + x[i + 5] + 1200080426,12) + a;
+		c = org.ascrypt.MD5.rol(c + (d & a | ~d & b) + x[i + 6] + -1473231341,17) + d;
+		b = org.ascrypt.MD5.rol(b + (c & d | ~c & a) + x[i + 7] + -45705983,22) + c;
+		a = org.ascrypt.MD5.rol(a + (b & c | ~b & d) + x[i + 8] + 1770035416,7) + b;
+		d = org.ascrypt.MD5.rol(d + (a & b | ~a & c) + x[i + 9] + -1958414417,12) + a;
+		c = org.ascrypt.MD5.rol(c + (d & a | ~d & b) + x[i + 10] + -42063,17) + d;
+		b = org.ascrypt.MD5.rol(b + (c & d | ~c & a) + x[i + 11] + -1990404162,22) + c;
+		a = org.ascrypt.MD5.rol(a + (b & c | ~b & d) + x[i + 12] + 1804603682,7) + b;
+		d = org.ascrypt.MD5.rol(d + (a & b | ~a & c) + x[i + 13] + -40341101,12) + a;
+		c = org.ascrypt.MD5.rol(c + (d & a | ~d & b) + x[i + 14] + -1502002290,17) + d;
+		b = org.ascrypt.MD5.rol(b + (c & d | ~c & a) + x[i + 15] + 1236535329,22) + c;
+		a = org.ascrypt.MD5.rol(a + (b & d | c & ~d) + x[i + 1] + -165796510,5) + b;
+		d = org.ascrypt.MD5.rol(d + (a & c | b & ~c) + x[i + 6] + -1069501632,9) + a;
+		c = org.ascrypt.MD5.rol(c + (d & b | a & ~b) + x[i + 11] + 643717713,14) + d;
+		b = org.ascrypt.MD5.rol(b + (c & a | d & ~a) + x[i] + -373897302,20) + c;
+		a = org.ascrypt.MD5.rol(a + (b & d | c & ~d) + x[i + 5] + -701558691,5) + b;
+		d = org.ascrypt.MD5.rol(d + (a & c | b & ~c) + x[i + 10] + 38016083,9) + a;
+		c = org.ascrypt.MD5.rol(c + (d & b | a & ~b) + x[i + 15] + -660478335,14) + d;
+		b = org.ascrypt.MD5.rol(b + (c & a | d & ~a) + x[i + 4] + -405537848,20) + c;
+		a = org.ascrypt.MD5.rol(a + (b & d | c & ~d) + x[i + 9] + 568446438,5) + b;
+		d = org.ascrypt.MD5.rol(d + (a & c | b & ~c) + x[i + 14] + -1019803690,9) + a;
+		c = org.ascrypt.MD5.rol(c + (d & b | a & ~b) + x[i + 3] + -187363961,14) + d;
+		b = org.ascrypt.MD5.rol(b + (c & a | d & ~a) + x[i + 8] + 1163531501,20) + c;
+		a = org.ascrypt.MD5.rol(a + (b & d | c & ~d) + x[i + 13] + -1444681467,5) + b;
+		d = org.ascrypt.MD5.rol(d + (a & c | b & ~c) + x[i + 2] + -51403784,9) + a;
+		c = org.ascrypt.MD5.rol(c + (d & b | a & ~b) + x[i + 7] + 1735328473,14) + d;
+		b = org.ascrypt.MD5.rol(b + (c & a | d & ~a) + x[i + 12] + -1926607734,20) + c;
+		a = org.ascrypt.MD5.rol(a + (b ^ c ^ d) + x[i + 5] + -378558,4) + b;
+		d = org.ascrypt.MD5.rol(d + (a ^ b ^ c) + x[i + 8] + -2022574463,11) + a;
+		c = org.ascrypt.MD5.rol(c + (d ^ a ^ b) + x[i + 11] + 1839030562,16) + d;
+		b = org.ascrypt.MD5.rol(b + (c ^ d ^ a) + x[i + 14] + -35309556,23) + c;
+		a = org.ascrypt.MD5.rol(a + (b ^ c ^ d) + x[i + 1] + -1530992060,4) + b;
+		d = org.ascrypt.MD5.rol(d + (a ^ b ^ c) + x[i + 4] + 1272893353,11) + a;
+		c = org.ascrypt.MD5.rol(c + (d ^ a ^ b) + x[i + 7] + -155497632,16) + d;
+		b = org.ascrypt.MD5.rol(b + (c ^ d ^ a) + x[i + 10] + -1094730640,23) + c;
+		a = org.ascrypt.MD5.rol(a + (b ^ c ^ d) + x[i + 13] + 681279174,4) + b;
+		d = org.ascrypt.MD5.rol(d + (a ^ b ^ c) + x[i] + -358537222,11) + a;
+		c = org.ascrypt.MD5.rol(c + (d ^ a ^ b) + x[i + 3] + -722521979,16) + d;
+		b = org.ascrypt.MD5.rol(b + (c ^ d ^ a) + x[i + 6] + 76029189,23) + c;
+		a = org.ascrypt.MD5.rol(a + (b ^ c ^ d) + x[i + 9] + -640364487,4) + b;
+		d = org.ascrypt.MD5.rol(d + (a ^ b ^ c) + x[i + 12] + -421815835,11) + a;
+		c = org.ascrypt.MD5.rol(c + (d ^ a ^ b) + x[i + 15] + 530742520,16) + d;
+		b = org.ascrypt.MD5.rol(b + (c ^ d ^ a) + x[i + 2] + -995338651,23) + c;
+		a = org.ascrypt.MD5.rol(a + (c ^ (b | ~d)) + x[i] + -198630844,6) + b;
+		d = org.ascrypt.MD5.rol(d + (b ^ (a | ~c)) + x[i + 7] + 1126891415,10) + a;
+		c = org.ascrypt.MD5.rol(c + (a ^ (d | ~b)) + x[i + 14] + -1416354905,15) + d;
+		b = org.ascrypt.MD5.rol(b + (d ^ (c | ~a)) + x[i + 5] + -57434055,21) + c;
+		a = org.ascrypt.MD5.rol(a + (c ^ (b | ~d)) + x[i + 12] + 1700485571,6) + b;
+		d = org.ascrypt.MD5.rol(d + (b ^ (a | ~c)) + x[i + 3] + -1894986606,10) + a;
+		c = org.ascrypt.MD5.rol(c + (a ^ (d | ~b)) + x[i + 10] + -1051523,15) + d;
+		b = org.ascrypt.MD5.rol(b + (d ^ (c | ~a)) + x[i + 1] + -2054922799,21) + c;
+		a = org.ascrypt.MD5.rol(a + (c ^ (b | ~d)) + x[i + 8] + 1873313359,6) + b;
+		d = org.ascrypt.MD5.rol(d + (b ^ (a | ~c)) + x[i + 15] + -30611744,10) + a;
+		c = org.ascrypt.MD5.rol(c + (a ^ (d | ~b)) + x[i + 6] + -1560198380,15) + d;
+		b = org.ascrypt.MD5.rol(b + (d ^ (c | ~a)) + x[i + 13] + 1309151649,21) + c;
+		a = org.ascrypt.MD5.rol(a + (c ^ (b | ~d)) + x[i + 4] + -145523070,6) + b;
+		d = org.ascrypt.MD5.rol(d + (b ^ (a | ~c)) + x[i + 11] + -1120210379,10) + a;
+		c = org.ascrypt.MD5.rol(c + (a ^ (d | ~b)) + x[i + 2] + 718787259,15) + d;
+		b = org.ascrypt.MD5.rol(b + (d ^ (c | ~a)) + x[i + 9] + -343485551,21) + c;
 		a += olda;
 		b += oldb;
 		c += oldc;
@@ -703,16 +703,16 @@ org.ascrypt.MD5.cmn = function(q,a,b,x,s,t) {
 	return org.ascrypt.MD5.rol(a + q + x + t,s) + b;
 }
 org.ascrypt.MD5.ff = function(a,b,c,d,x,s,t) {
-	return org.ascrypt.MD5.cmn(b & c | ~b & d,a,b,x,s,t);
+	return org.ascrypt.MD5.rol(a + (b & c | ~b & d) + x + t,s) + b;
 }
 org.ascrypt.MD5.gg = function(a,b,c,d,x,s,t) {
-	return org.ascrypt.MD5.cmn(b & d | c & ~d,a,b,x,s,t);
+	return org.ascrypt.MD5.rol(a + (b & d | c & ~d) + x + t,s) + b;
 }
 org.ascrypt.MD5.hh = function(a,b,c,d,x,s,t) {
-	return org.ascrypt.MD5.cmn(b ^ c ^ d,a,b,x,s,t);
+	return org.ascrypt.MD5.rol(a + (b ^ c ^ d) + x + t,s) + b;
 }
 org.ascrypt.MD5.ii = function(a,b,c,d,x,s,t) {
-	return org.ascrypt.MD5.cmn(c ^ (b | ~d),a,b,x,s,t);
+	return org.ascrypt.MD5.rol(a + (c ^ (b | ~d)) + x + t,s) + b;
 }
 org.ascrypt.MD5.rol = function(n,c) {
 	return n << c | n >>> 32 - c;
@@ -720,8 +720,8 @@ org.ascrypt.MD5.rol = function(n,c) {
 org.ascrypt.RMD160 = function() { }
 org.ascrypt.RMD160.__name__ = true;
 org.ascrypt.RMD160.compute = function(bytes) {
-	var b = org.ascrypt.utilities.UTIL.pack(bytes);
-	return org.ascrypt.utilities.UTIL.unpack(org.ascrypt.RMD160.core(b,bytes.length * 8));
+	var b = org.ascrypt.utilities.UTIL.pack(bytes,null);
+	return org.ascrypt.utilities.UTIL.unpack(org.ascrypt.RMD160.core(b,bytes.length * 8),null);
 }
 org.ascrypt.RMD160.computeHMAC = function(key,bytes) {
 	return org.ascrypt.utilities.HMAC.compute(key,bytes,org.ascrypt.RMD160.compute,64);
@@ -738,22 +738,22 @@ org.ascrypt.RMD160.core = function(x,l) {
 		var _g = 0;
 		while(_g < 80) {
 			var j = _g++;
-			t = org.ascrypt.RMD160.add(a1,org.ascrypt.RMD160.f(j,b1,c1,d1));
+			t = org.ascrypt.RMD160.add(a1,0 <= j && j <= 15?b1 ^ c1 ^ d1:16 <= j && j <= 31?b1 & c1 | ~b1 & d1:32 <= j && j <= 47?(b1 | ~c1) ^ d1:48 <= j && j <= 63?b1 & d1 | c1 & ~d1:64 <= j && j <= 79?b1 ^ (c1 | ~d1):Math.NEGATIVE_INFINITY | 0);
 			t = org.ascrypt.RMD160.add(t,x[i + org.ascrypt.RMD160.r1[j]]);
-			t = org.ascrypt.RMD160.add(t,org.ascrypt.RMD160.k1(j));
+			t = org.ascrypt.RMD160.add(t,0 <= j && j <= 15?0:16 <= j && j <= 31?1518500249:32 <= j && j <= 47?1859775393:48 <= j && j <= 63?-1894007588:64 <= j && j <= 79?-1454113458:Math.NEGATIVE_INFINITY | 0);
 			t = org.ascrypt.RMD160.add(org.ascrypt.RMD160.rol(t,org.ascrypt.RMD160.s1[j]),e1);
 			a1 = e1;
 			e1 = d1;
-			d1 = org.ascrypt.RMD160.rol(c1,10);
+			d1 = c1 << 10 | c1 >>> 22;
 			c1 = b1;
 			b1 = t;
 			t = org.ascrypt.RMD160.add(a2,org.ascrypt.RMD160.f(79 - j,b2,c2,d2));
 			t = org.ascrypt.RMD160.add(t,x[i + org.ascrypt.RMD160.r2[j]]);
-			t = org.ascrypt.RMD160.add(t,org.ascrypt.RMD160.k2(j));
+			t = org.ascrypt.RMD160.add(t,0 <= j && j <= 15?1352829926:16 <= j && j <= 31?1548603684:32 <= j && j <= 47?1836072691:48 <= j && j <= 63?2053994217:64 <= j && j <= 79?0:Math.NEGATIVE_INFINITY | 0);
 			t = org.ascrypt.RMD160.add(org.ascrypt.RMD160.rol(t,org.ascrypt.RMD160.s2[j]),e2);
 			a2 = e2;
 			e2 = d2;
-			d2 = org.ascrypt.RMD160.rol(c2,10);
+			d2 = c2 << 10 | c2 >>> 22;
 			c2 = b2;
 			b2 = t;
 		}
@@ -827,10 +827,10 @@ org.ascrypt.SHA1.core = function(x,l) {
 		while(_g < 80) {
 			var j = _g++;
 			if(j < 16) w[j] = x[i1 + j]; else w[j] = org.ascrypt.SHA1.rol(w[j - 3] ^ w[j - 8] ^ w[j - 14] ^ w[j - 16],1);
-			var t = org.ascrypt.SHA1.add(org.ascrypt.SHA1.add(org.ascrypt.SHA1.rol(a,5),org.ascrypt.SHA1.ft(j,b,c,d)),org.ascrypt.SHA1.add(org.ascrypt.SHA1.add(e,w[j]),org.ascrypt.SHA1.kt(j)));
+			var t = org.ascrypt.SHA1.add(org.ascrypt.SHA1.add(a << 5 | a >>> 27,org.ascrypt.SHA1.ft(j,b,c,d)),org.ascrypt.SHA1.add(org.ascrypt.SHA1.add(e,w[j]),j < 20?1518500249:j < 40?1859775393:j < 60?-1894007588:-899497514));
 			e = d;
 			d = c;
-			c = org.ascrypt.SHA1.rol(b,30);
+			c = b << 30 | b >>> 2;
 			b = a;
 			a = t;
 		}
@@ -843,14 +843,14 @@ org.ascrypt.SHA1.core = function(x,l) {
 	}
 	return [a,b,c,d,e];
 }
-org.ascrypt.SHA1.kt = function(t) {
-	return t < 20?1518500249:t < 40?1859775393:t < 60?-1894007588:-899497514;
-}
 org.ascrypt.SHA1.ft = function(t,b,c,d) {
 	if(t < 20) return b & c | ~b & d;
 	if(t < 40) return b ^ c ^ d;
 	if(t < 60) return b & c | b & d | c & d;
 	return b ^ c ^ d;
+}
+org.ascrypt.SHA1.kt = function(t) {
+	return t < 20?1518500249:t < 40?1859775393:t < 60?-1894007588:-899497514;
 }
 org.ascrypt.SHA1.rol = function(n,c) {
 	return n << c | n >>> 32 - c;
@@ -890,8 +890,8 @@ org.ascrypt.SHA256.core = function(m,l) {
 		while(_g < 64) {
 			var j = _g++;
 			if(j < 16) w[j] = m[j + i]; else w[j] = org.ascrypt.SHA256.add(org.ascrypt.SHA256.add(org.ascrypt.SHA256.add(org.ascrypt.SHA256.g1256(w[j - 2]),w[j - 7]),org.ascrypt.SHA256.g0256(w[j - 15])),w[j - 16]);
-			t1 = org.ascrypt.SHA256.add(org.ascrypt.SHA256.add(org.ascrypt.SHA256.add(org.ascrypt.SHA256.add(h,org.ascrypt.SHA256.s1256(e)),org.ascrypt.SHA256.ch(e,f,g)),k[j]),w[j]);
-			t2 = org.ascrypt.SHA256.add(org.ascrypt.SHA256.s0256(a),org.ascrypt.SHA256.maj(a,b,c));
+			t1 = org.ascrypt.SHA256.add(org.ascrypt.SHA256.add(org.ascrypt.SHA256.add(org.ascrypt.SHA256.add(h,(e >>> 6 | e << 26) ^ (e >>> 11 | e << 21) ^ (e >>> 25 | e << 7)),e & f ^ ~e & g),k[j]),w[j]);
+			t2 = org.ascrypt.SHA256.add((a >>> 2 | a << 30) ^ (a >>> 13 | a << 19) ^ (a >>> 22 | a << 10),a & b ^ a & c ^ b & c);
 			h = g;
 			g = f;
 			f = e;
@@ -923,16 +923,16 @@ org.ascrypt.SHA256.maj = function(x,y,z) {
 	return x & y ^ x & z ^ y & z;
 }
 org.ascrypt.SHA256.s0256 = function(x) {
-	return org.ascrypt.SHA256.s(x,2) ^ org.ascrypt.SHA256.s(x,13) ^ org.ascrypt.SHA256.s(x,22);
+	return (x >>> 2 | x << 30) ^ (x >>> 13 | x << 19) ^ (x >>> 22 | x << 10);
 }
 org.ascrypt.SHA256.s1256 = function(x) {
-	return org.ascrypt.SHA256.s(x,6) ^ org.ascrypt.SHA256.s(x,11) ^ org.ascrypt.SHA256.s(x,25);
+	return (x >>> 6 | x << 26) ^ (x >>> 11 | x << 21) ^ (x >>> 25 | x << 7);
 }
 org.ascrypt.SHA256.g0256 = function(x) {
-	return org.ascrypt.SHA256.s(x,7) ^ org.ascrypt.SHA256.s(x,18) ^ x >>> 3;
+	return (x >>> 7 | x << 25) ^ (x >>> 18 | x << 14) ^ x >>> 3;
 }
 org.ascrypt.SHA256.g1256 = function(x) {
-	return org.ascrypt.SHA256.s(x,17) ^ org.ascrypt.SHA256.s(x,19) ^ x >>> 10;
+	return (x >>> 17 | x << 15) ^ (x >>> 19 | x << 13) ^ x >>> 10;
 }
 org.ascrypt.SHA256.add = function(one,two) {
 	var l = (one & 65535) + (two & 65535);
@@ -942,9 +942,10 @@ org.ascrypt.SHA256.add = function(one,two) {
 org.ascrypt.XXTEA = function() { }
 org.ascrypt.XXTEA.__name__ = true;
 org.ascrypt.XXTEA.encrypt = function(key,bytes) {
-	org.ascrypt.XXTEA.check(key,bytes);
-	var h = org.ascrypt.utilities.UTIL.pack(key);
-	var v = org.ascrypt.utilities.UTIL.pack(bytes);
+	if(key.length != 16) throw org.ascrypt.XXTEA.ERROR_KEY;
+	if(bytes.length < 8 || bytes.length % 4 != 0) throw org.ascrypt.XXTEA.ERROR_BLOCK;
+	var h = org.ascrypt.utilities.UTIL.pack(key,null);
+	var v = org.ascrypt.utilities.UTIL.pack(bytes,null);
 	if(v.length <= 1) v[1] = 0;
 	var n = v.length;
 	var z = v[n - 1], y = v[0], d = -1640531527;
@@ -960,12 +961,13 @@ org.ascrypt.XXTEA.encrypt = function(key,bytes) {
 			z = v[i] += m;
 		}
 	}
-	return org.ascrypt.utilities.UTIL.unpack(v);
+	return org.ascrypt.utilities.UTIL.unpack(v,null);
 }
 org.ascrypt.XXTEA.decrypt = function(key,bytes) {
-	org.ascrypt.XXTEA.check(key,bytes);
-	var h = org.ascrypt.utilities.UTIL.pack(key);
-	var v = org.ascrypt.utilities.UTIL.pack(bytes);
+	if(key.length != 16) throw org.ascrypt.XXTEA.ERROR_KEY;
+	if(bytes.length < 8 || bytes.length % 4 != 0) throw org.ascrypt.XXTEA.ERROR_BLOCK;
+	var h = org.ascrypt.utilities.UTIL.pack(key,null);
+	var v = org.ascrypt.utilities.UTIL.pack(bytes,null);
 	var n = v.length, z = v[n - 1], y = v[0], d = -1640531527;
 	var m, e, q = Math.floor(6 + 52 / n), s = q * d;
 	while(s != 0) {
@@ -979,7 +981,7 @@ org.ascrypt.XXTEA.decrypt = function(key,bytes) {
 		}
 		s -= d;
 	}
-	return org.ascrypt.utilities.UTIL.unpack(v);
+	return org.ascrypt.utilities.UTIL.unpack(v,null);
 }
 org.ascrypt.XXTEA.check = function(k,b) {
 	if(k.length != 16) throw org.ascrypt.XXTEA.ERROR_KEY;

@@ -15,7 +15,7 @@ class CBC
 	* @param iv An array of init vector bytes.
 	* @return An array of CBC mode encrypted bytes.
 	*/
-	public static function encrypt(key:Array<Int>, bytes:Array<Int>, size:Int, encrypt:Dynamic, iv:Array<Int>):Array<Int>
+	public static inline function encrypt(key:Array<Int>, bytes:Array<Int>, size:Int, encrypt:Dynamic, iv:Array<Int>):Array<Int>
 	{
 		var r:Array<Int> = [];
 		var l:Int = bytes.length;
@@ -39,7 +39,7 @@ class CBC
 	* @param iv An array of init vector bytes.
 	* @return An array of CBC mode decrypted bytes.
 	*/
-	public static function decrypt(key:Array<Int>, bytes:Array<Int>, size:Int, decrypt:Dynamic, iv:Array<Int>):Array<Int>
+	public static inline function decrypt(key:Array<Int>, bytes:Array<Int>, size:Int, decrypt:Dynamic, iv:Array<Int>):Array<Int>
 	{
 		var l:Int = bytes.length;
 		var t:Array<Int>, r:Array<Int> = [];

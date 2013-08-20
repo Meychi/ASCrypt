@@ -47,7 +47,7 @@ class ARC4
 	/**
 	* Private methods of the class.
 	*/
-	private static function core(k:Array<Int>, b:Array<Int>, n:Bool):Array<Int>
+	private static inline function core(k:Array<Int>, b:Array<Int>, n:Bool):Array<Int>
 	{
 		if (n) init(k);
 		var r:Array<Int> = [];
@@ -66,7 +66,7 @@ class ARC4
 		}
 		return r;
 	}
-	private static function init(k:Array<Int>):Void
+	private static inline function init(k:Array<Int>):Void
 	{
 		var l:Int = k.length;
 		var t:Int, c:Int = 0;
@@ -83,7 +83,7 @@ class ARC4
 			sbox[c] = t;
 		}
 	}
-	private static function check(k:Array<Int>):Void
+	private static inline function check(k:Array<Int>):Void
 	{
 		var kl:Int = k.length;
 		if (kl < 5 || kl > 16) throw ERROR_KEY;

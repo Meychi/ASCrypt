@@ -25,7 +25,7 @@ class GUID
 	/**
 	* Private methods of the class.
 	*/
-	private static function format(s:String):String
+	private static inline function format(s:String):String
 	{
 		var p:Array<String> = [];
 		p[0] = s.substr(0, 8);

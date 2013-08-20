@@ -75,7 +75,7 @@ class XXTEA
 	/**
 	* Private static methods of the class.
 	*/
-	private static function check(k:Array<Int>, b:Array<Int>):Void
+	private static inline function check(k:Array<Int>, b:Array<Int>):Void
 	{
 		if (k.length != 16) throw ERROR_KEY;
 		if (b.length < 8 || b.length % 4 != 0) throw ERROR_BLOCK;

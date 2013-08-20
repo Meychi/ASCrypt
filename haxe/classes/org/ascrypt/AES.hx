@@ -79,7 +79,7 @@ class AES
 	/**
 	* Private methods of the class.
 	*/
-	private static function init():Void
+	private static inline function init():Void
 	{
 		isrtab = new Array<Int>();
 		isbox = new Array<Int>();
@@ -92,20 +92,20 @@ class AES
 			xtime[128 + k] = (k << 1) ^ 0x1b;
 		}
 	}
-	private static function sb(s:Array<Int>, b:Array<Int>):Void 
+	private static inline function sb(s:Array<Int>, b:Array<Int>):Void 
 	{
 		for (i in 0...16) s[i] = b[s[i]];
 	}
-	private static function ark(s:Array<Int>, r:Array<Int>):Void 
+	private static inline function ark(s:Array<Int>, r:Array<Int>):Void 
 	{
 		for (i in 0...16) s[i] ^= r[i];
 	}
-	private static function sr(s:Array<Int>, t:Array<Int>):Void
+	private static inline function sr(s:Array<Int>, t:Array<Int>):Void
 	{
 		var h:Array<Int> = s.copy();
 		for (i in 0...16) s[i] = h[t[i]];
 	}
-	private static function ek(k:Array<Int>):Void
+	private static inline function ek(k:Array<Int>):Void
 	{
 		var kl:Int = k.length;
 		var ks:Int = 0, rcon:Int = 1;
@@ -137,7 +137,7 @@ class AES
 			i += 4;
 		}
 	}
-	private static function ie(k:Array<Int>, ob:Array<Int>):Array<Int>
+	private static inline function ie(k:Array<Int>, ob:Array<Int>):Array<Int>
 	{
 		var b:Array<Int> = ob.copy();
 		var i:Int = 16, l:Int = k.length;
@@ -152,7 +152,7 @@ class AES
 		ark(b, k.slice(i, i + 16));
 		return b;
 	}
-	private static function id(k:Array<Int>, ob:Array<Int>):Array<Int>
+	private static inline function id(k:Array<Int>, ob:Array<Int>):Array<Int>
 	{
 		var b:Array<Int> = ob.copy();
 		var l:Int = k.length;
@@ -169,7 +169,7 @@ class AES
 		ark(b, k.slice(0, 16));
 		return b;
 	}
-	private static function mc(s:Array<Int>):Void 
+	private static inline function mc(s:Array<Int>):Void 
 	{
 		var i:Int = 0;
 		while (i < 16)
@@ -184,7 +184,7 @@ class AES
 			i += 4;
 		}
 	}
-	private static function mci(s:Array<Int>):Void 
+	private static inline function mci(s:Array<Int>):Void 
 	{
 		var i:Int = 0;
 		while (i < 16)
@@ -202,7 +202,7 @@ class AES
 			i += 4;
 		}
 	}
-	private static function check(k:Array<Int>, b:Array<Int>):Void
+	private static inline function check(k:Array<Int>, b:Array<Int>):Void
 	{
 		var kl:Int = k.length;
 		if (kl != 16 && kl != 24 && kl != 32) throw ERROR_KEY;

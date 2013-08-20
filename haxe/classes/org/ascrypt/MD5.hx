@@ -35,7 +35,7 @@ class MD5
 	/**
 	* Private methods of the class.
 	*/
-	private static function core(x:Array<Int>, l:Int):Array<Int>
+	private static inline function core(x:Array<Int>, l:Int):Array<Int>
 	{
 		x[l >> 5] |= 0x80 << ((l) % 32);
 		x[(((l + 64) >>> 9) << 4) + 14] = l;
@@ -119,27 +119,27 @@ class MD5
 		}
 		return [a, b, c, d];
 	}
-	private static function cmn(q:Int, a:Int, b:Int, x:Int, s:Int, t:Int):Int 
+	private static inline function cmn(q:Int, a:Int, b:Int, x:Int, s:Int, t:Int):Int 
 	{
 		return rol(a + q + x + t, s) + b;
 	}
-	private static function ff(a:Int, b:Int, c:Int, d:Int, x:Int, s:Int, t:Int):Int 
+	private static inline function ff(a:Int, b:Int, c:Int, d:Int, x:Int, s:Int, t:Int):Int 
 	{
 		return cmn((b & c) | ((~b) & d), a, b, x, s, t);
 	}
-	private static function gg(a:Int, b:Int, c:Int, d:Int, x:Int, s:Int, t:Int):Int 
+	private static inline function gg(a:Int, b:Int, c:Int, d:Int, x:Int, s:Int, t:Int):Int 
 	{
 		return cmn((b & d) | (c & (~d)), a, b, x, s, t);
 	}
-	private static function hh(a:Int, b:Int, c:Int, d:Int, x:Int, s:Int, t:Int):Int 
+	private static inline function hh(a:Int, b:Int, c:Int, d:Int, x:Int, s:Int, t:Int):Int 
 	{
 		return cmn(b ^ c ^ d, a, b, x, s, t);
 	}
-	private static function ii(a:Int, b:Int, c:Int, d:Int, x:Int, s:Int, t:Int):Int 
+	private static inline function ii(a:Int, b:Int, c:Int, d:Int, x:Int, s:Int, t:Int):Int 
 	{
 		return cmn(c ^ (b | (~d)), a, b, x, s, t);
 	}
-	private static function rol(n:Int, c:Int):Int
+	private static inline function rol(n:Int, c:Int):Int
 	{
 		return (n << c) | (n >>> (32 - c));
 	}

@@ -37,7 +37,7 @@ class SHA256
 	/**
 	* Private methods of the class.
 	*/
-	private static function core(m:Array<Int>, l:Int):Array<Int>
+	private static inline function core(m:Array<Int>, l:Int):Array<Int>
 	{
 		var a:Int, b:Int, c:Int, d:Int; 
 		var e:Int, f:Int, g:Int, h:Int, i:Int = 0;
@@ -67,35 +67,35 @@ class SHA256
 		}
 		return r;
 	}
-	private static function s(x:Int, n:Int):Int 
+	private static inline function s(x:Int, n:Int):Int 
 	{
 		return (x >>> n) | (x << (32 - n));
 	}
-	private static function ch(x:Int, y:Int, z:Int):Int 
+	private static inline function ch(x:Int, y:Int, z:Int):Int 
 	{
 		return ((x & y) ^ ((~x) & z));
 	}
-	private static function maj(x:Int, y:Int, z:Int):Int 
+	private static inline function maj(x:Int, y:Int, z:Int):Int 
 	{
 		return ((x & y) ^ (x & z) ^ (y & z));
 	}
-	private static function s0256(x:Int):Int 
+	private static inline function s0256(x:Int):Int 
 	{
 		return (s(x, 2) ^ s(x, 13) ^ s(x, 22));
 	}
-	private static function s1256(x:Int):Int 
+	private static inline function s1256(x:Int):Int 
 	{
 		return (s(x, 6) ^ s(x, 11) ^ s(x, 25));
 	}
-	private static function g0256(x:Int):Int 
+	private static inline function g0256(x:Int):Int 
 	{
 		return (s(x, 7) ^ s(x, 18) ^ (x >>> 3));
 	}
-	private static function g1256(x:Int):Int 
+	private static inline function g1256(x:Int):Int 
 	{
 		return (s(x, 17) ^ s(x, 19) ^ (x >>> 10));
 	}
-	public static function add(one:Int, two:Int):Int
+	public static inline function add(one:Int, two:Int):Int
 	{
 		var l:Int = (one & 0xFFFF) + (two & 0xFFFF);
 		var m:Int = (one >> 16) + (two >> 16) + (l >> 16);
@@ -113,7 +113,7 @@ class SHA256
 	/**
 	* Private methods of the class.
 	*/
-	private static function core(x:Array<Int>, l:Int):Array<Int>
+	private static inline function core(x:Array<Int>, l:Int):Array<Int>
 	{
 		x[l >> 5] |= 0x80 << (24 - l % 32);
 		x[((l + 64 >> 9) << 4) + 15] = l;
@@ -148,7 +148,7 @@ class SHA256
 		}
 		return [a, b, c, d, e, f, g, h];
 	}
-	private static function rrol(n:Int, c:Int):Int
+	private static inline function rrol(n:Int, c:Int):Int
 	{
 		return (n << (32 - c)) | (n >>> c);
 	}

@@ -37,7 +37,7 @@ class SHA1
 	/**
 	* Private methods of the class.
 	*/
-	private static function core(x:Array<Int>, l:Int):Array<Int>
+	private static inline function core(x:Array<Int>, l:Int):Array<Int>
 	{
 		x[l >> 5] |= 0x80 << (24 - l % 32);
 		x[((l + 64 >> 9) << 4) + 15] = l;
@@ -62,10 +62,6 @@ class SHA1
 		}
 		return [a, b, c, d, e];
 	}
-	private static function kt(t:Int):Int 
-	{
-		return (t < 20) ? 1518500249 : (t < 40) ? 1859775393 : (t < 60) ? -1894007588 : -899497514;
-	}
 	private static function ft(t:Int, b:Int, c:Int, d:Int):Int 
 	{
 		if (t < 20) return (b & c) | ((~b) & d);
@@ -73,11 +69,15 @@ class SHA1
 		if (t < 60) return (b & c) | (b & d) | (c & d);
 		return b ^ c ^ d;
 	}
-	private static function rol(n:Int, c:Int):Int 
+	private static inline function kt(t:Int):Int 
+	{
+		return (t < 20) ? 1518500249 : (t < 40) ? 1859775393 : (t < 60) ? -1894007588 : -899497514;
+	}
+	private static inline function rol(n:Int, c:Int):Int 
 	{
 		return (n << c) | (n >>> (32 - c));
 	}
-	public static function add(one:Int, two:Int):Int
+	public static inline function add(one:Int, two:Int):Int
 	{
 		var l:Int = (one & 0xFFFF) + (two & 0xFFFF);
 		var m:Int = (one >> 16) + (two >> 16) + (l >> 16);
@@ -89,7 +89,7 @@ class SHA1
 	/**
 	* Private methods of the class.
 	*/
-	private static function core(x:Array<Int>, l:Int):Array<Int>
+	private static inline function core(x:Array<Int>, l:Int):Array<Int>
 	{
 		var w:Array<Int> = [];
 		x[l >> 5] |= 0x80 << (24 - l % 32);
@@ -118,10 +118,6 @@ class SHA1
 		}
 		return [a, b, c, d, e];
 	}
-	private static function kt(t:Int):Int
-	{
-		return (t < 20) ? 0x5A827999 : (t < 40) ?  0x6ED9EBA1 : (t < 60) ? 0x8F1BBCDC : 0xCA62C1D6;
-	}
 	private static function ft(t:Int, b:Int, c:Int, d:Int):Int
 	{
 		if (t < 20) return (b & c) | ((~b) & d);
@@ -129,7 +125,11 @@ class SHA1
 		if (t < 60) return (b & c) | (b & d) | (c & d);
 		return b ^ c ^ d;
 	}
-	private static function rol(n:Int, c:Int):Int
+	private static inline function kt(t:Int):Int
+	{
+		return (t < 20) ? 0x5A827999 : (t < 40) ?  0x6ED9EBA1 : (t < 60) ? 0x8F1BBCDC : 0xCA62C1D6;
+	}
+	private static inline function rol(n:Int, c:Int):Int
 	{
 		return (n << c) | (n >>> (32 - c));
 	}

@@ -12,7 +12,7 @@ class UTIL
 	* @param little Use little endian byte order?
 	* @return An array of 32-bit words.
 	*/
-	public static function pack(bytes:Array<Int>, little:Bool = true):Array<Int>
+	public static inline function pack(bytes:Array<Int>, little:Bool = true):Array<Int>
 	{
 		var w:Array<Int> = [];
 		var l:Int = bytes.length;
@@ -45,7 +45,7 @@ class UTIL
 	* @param little Use little endian byte order?
 	* @return An array of unpacked bytes.
 	*/
-	public static function unpack(words:Array<Int>, little:Bool = true):Array<Int>
+	public static inline function unpack(words:Array<Int>, little:Bool = true):Array<Int>
 	{
 		var b:Array<Int> = [];
 		var l:Int = words.length;
@@ -82,7 +82,7 @@ class UTIL
 	* @param args The arguments to insert.
 	* @return The formatted string.
 	*/
-	public static function format(string:String, args:Array<String>):String
+	public static inline function format(string:String, args:Array<String>):String
 	{
 		var l:Int = args.length;
 		for (i in 0...l)

@@ -14,7 +14,7 @@ class ECB
 	* @param crypt The encryption function.
 	* @return An array of ECB mode encrypted bytes.
 	*/
-	public static function encrypt(key:Array<Int>, bytes:Array<Int>, size:Int, encrypt:Dynamic):Array<Int>
+	public static inline function encrypt(key:Array<Int>, bytes:Array<Int>, size:Int, encrypt:Dynamic):Array<Int>
 	{
 		return core(key, bytes, size, encrypt);
 	}
@@ -27,7 +27,7 @@ class ECB
 	* @param decrypt The decryption function.
 	* @return An array of ECB mode decrypted bytes.
 	*/
-	public static function decrypt(key:Array<Int>, bytes:Array<Int>, size:Int, decrypt:Dynamic):Array<Int>
+	public static inline function decrypt(key:Array<Int>, bytes:Array<Int>, size:Int, decrypt:Dynamic):Array<Int>
 	{
 		return core(key, bytes, size, decrypt);
 	}
@@ -35,7 +35,7 @@ class ECB
 	/**
 	* Private static methods of the class.
 	*/
-	private static function core(k:Array<Int>, b:Array<Int>, s:Int, c:Dynamic):Array<Int>
+	private static inline function core(k:Array<Int>, b:Array<Int>, s:Int, c:Dynamic):Array<Int>
 	{
 		var r:Array<Int> = [];
 		var l:Int = b.length;

@@ -43,7 +43,7 @@ class RMD160
 	/**
 	* Private methods of the class.
 	*/
-	private static function core(x:Array<Int>, l:Int):Array<Int>
+	private static inline function core(x:Array<Int>, l:Int):Array<Int>
 	{
 		x[l >> 5] |= 0x80 << (l % 32);
 		x[(((l + 64) >>> 9) << 4) + 14] = l;
@@ -81,25 +81,25 @@ class RMD160
 		}
 		return [h0, h1, h2, h3, h4];
 	}
-	private static function f(j:Int, x:Int, y:Int, z:Int):Int
+	private static inline function f(j:Int, x:Int, y:Int, z:Int):Int
 	{
 		return (0 <= j && j <= 15) ? (x ^ y ^ z) :(16 <= j && j <= 31) ? (x & y) | (~x & z) : (32 <= j && j <= 47) ? (x | ~y) ^ z : (48 <= j && j <= 63) ? (x & z) | (y & ~z) : (64 <= j && j <= 79) ? x ^ (y | ~z) : Std.int(Math.NEGATIVE_INFINITY);
 	}
-	private static function k1(j:Int):Int
+	private static inline function k1(j:Int):Int
 	{
 		return (0 <= j && j <= 15) ? 0x00000000 : (16 <= j && j <= 31) ? 0x5a827999 : (32 <= j && j <= 47) ? 0x6ed9eba1 : (48 <= j && j <= 63) ? 0x8f1bbcdc : (64 <= j && j <= 79) ? 0xa953fd4e : Std.int(Math.NEGATIVE_INFINITY);
 	}
-	private static function k2(j:Int):Int
+	private static inline function k2(j:Int):Int
 	{
 		return (0 <= j && j <= 15) ? 0x50a28be6 : (16 <= j && j <= 31) ? 0x5c4dd124 : (32 <= j && j <= 47) ? 0x6d703ef3 : (48 <= j && j <= 63) ? 0x7a6d76e9 : (64 <= j && j <= 79) ? 0x00000000 : Std.int(Math.NEGATIVE_INFINITY);
 	}
-	private static function add(x:Int, y:Int):Int
+	private static inline function add(x:Int, y:Int):Int
 	{
 		var l:Int = (x & 0xFFFF) + (y & 0xFFFF);
 		var m:Int = (x >> 16) + (y >> 16) + (l >> 16);
 		return (m << 16) | (l & 0xFFFF);
 	}
-	private static function rol(n:Int, c:Int):Int 
+	private static inline function rol(n:Int, c:Int):Int 
 	{
 		return (n << c) | (n >>> (32 - c));
 	}

@@ -15,7 +15,7 @@ class CTR
 	* @param iv An array of init vector bytes.
 	* @return An array of CTR mode encrypted bytes.
 	*/
-	public static function encrypt(key:Array<Int>, bytes:Array<Int>, size:Int, encrypt:Dynamic, iv:Array<Int>):Array<Int>
+	public static inline function encrypt(key:Array<Int>, bytes:Array<Int>, size:Int, encrypt:Dynamic, iv:Array<Int>):Array<Int>
 	{
 		return core(key, bytes, size, encrypt, iv);
 	}
@@ -29,7 +29,7 @@ class CTR
 	* @param iv An array of init vector bytes.
 	* @return An array of CTR mode decrypted bytes.
 	*/
-	public static function decrypt(key:Array<Int>, bytes:Array<Int>, size:Int, encrypt:Dynamic, iv:Array<Int>):Array<Int>
+	public static inline function decrypt(key:Array<Int>, bytes:Array<Int>, size:Int, encrypt:Dynamic, iv:Array<Int>):Array<Int>
 	{
 		return core(key, bytes, size, encrypt, iv);
 	}
@@ -37,7 +37,7 @@ class CTR
 	/**
 	* Private static methods of the class.
 	*/
-	private static function core(k:Array<Int>, b:Array<Int>, s:Int, c:Dynamic, v:Array<Int>):Array<Int>
+	private static inline function core(k:Array<Int>, b:Array<Int>, s:Int, c:Dynamic, v:Array<Int>):Array<Int>
 	{
 		var bl:Int = b.length;
 		var e:Array<Int> = [], x:Array<Int> = v.copy();

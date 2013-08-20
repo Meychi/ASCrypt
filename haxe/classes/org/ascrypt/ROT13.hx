@@ -35,7 +35,7 @@ class ROT13
 	/**
 	* Private methods of the class.
 	*/
-	private static function core(b:Array<Int>):Array<Int>
+	private static inline function core(b:Array<Int>):Array<Int>
 	{
 		var c:String, r:Array<Int> = [];
 		var p:Int, l:Int = b.length;
