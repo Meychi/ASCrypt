@@ -319,7 +319,7 @@ class Main
 		}
 		catch (msg:Dynamic)
 		{
-			writeLine("Error: " + msg);
+			trace("Error: " + msg);
 		}
 	}
 	

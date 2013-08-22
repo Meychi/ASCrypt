@@ -167,7 +167,7 @@ Main.prototype = {
 			this.writeLine("All this took: " + (end - start) + " milliseconds.");
 			console.log(this.log);
 		} catch( msg ) {
-			this.writeLine("Error: " + Std.string(msg));
+			console.log("Error: " + Std.string(msg));
 		}
 	}
 	,getTimer: function() {

@@ -286,8 +286,8 @@ public function testAlgorithms():void
 	catch (e:Error)
 	{
 		var stack:String = e.getStackTrace();
-		if (stack != null) writeLine(stack);
-		else writeLine(e.message);
+		if (stack != null) console.htmlText = stack;
+		else  console.htmlText = e.message;
 	}
 	
 }
