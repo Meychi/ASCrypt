@@ -1,11 +1,11 @@
 (function () { "use strict";
-var HxOverrides = function() { }
+var HxOverrides = function() { };
 HxOverrides.__name__ = true;
 HxOverrides.cca = function(s,index) {
 	var x = s.charCodeAt(index);
 	if(x != x) return undefined;
 	return x;
-}
+};
 HxOverrides.substr = function(s,pos,len) {
 	if(pos != null && pos != 0 && len != null && len < 0) return "";
 	if(len == null) len = s.length;
@@ -14,7 +14,7 @@ HxOverrides.substr = function(s,pos,len) {
 		if(pos < 0) pos = 0;
 	} else if(len < 0) len = s.length + len - pos;
 	return s.substr(pos,len);
-}
+};
 var Main = function() {
 	this.log = "";
 };
@@ -22,9 +22,15 @@ Main.__name__ = true;
 Main.main = function() {
 	var main = new Main();
 	main.testAlgorithms();
-}
+};
 Main.prototype = {
-	testAlgorithms: function() {
+	writeLine: function(msg) {
+		this.log += msg + "\n";
+	}
+	,getTimer: function() {
+		return new Date().getTime();
+	}
+	,testAlgorithms: function() {
 		try {
 			var start = this.getTimer();
 			var input = "Hello to € World!";
@@ -170,25 +176,20 @@ Main.prototype = {
 			console.log("Error: " + Std.string(msg));
 		}
 	}
-	,getTimer: function() {
-		return new Date().getTime();
-	}
-	,writeLine: function(msg) {
-		this.log += msg + "\n";
-	}
-}
-var Std = function() { }
+};
+Math.__name__ = true;
+var Std = function() { };
 Std.__name__ = true;
 Std.string = function(s) {
 	return js.Boot.__string_rec(s,"");
-}
+};
 Std.parseInt = function(x) {
 	var v = parseInt(x,10);
 	if(v == 0 && (HxOverrides.cca(x,1) == 120 || HxOverrides.cca(x,1) == 88)) v = parseInt(x);
 	if(isNaN(v)) return null;
 	return v;
-}
-var StringTools = function() { }
+};
+var StringTools = function() { };
 StringTools.__name__ = true;
 StringTools.hex = function(n,digits) {
 	var s = "";
@@ -199,9 +200,9 @@ StringTools.hex = function(n,digits) {
 	} while(n > 0);
 	if(digits != null) while(s.length < digits) s = "0" + s;
 	return s;
-}
-var js = {}
-js.Boot = function() { }
+};
+var js = {};
+js.Boot = function() { };
 js.Boot.__name__ = true;
 js.Boot.__string_rec = function(o,s) {
 	if(o == null) return "null";
@@ -215,7 +216,8 @@ js.Boot.__string_rec = function(o,s) {
 				if(o.length == 2) return o[0];
 				var str = o[0] + "(";
 				s += "\t";
-				var _g1 = 2, _g = o.length;
+				var _g1 = 2;
+				var _g = o.length;
 				while(_g1 < _g) {
 					var i = _g1++;
 					if(i != 2) str += "," + js.Boot.__string_rec(o[i],s); else str += js.Boot.__string_rec(o[i],s);
@@ -223,16 +225,16 @@ js.Boot.__string_rec = function(o,s) {
 				return str + ")";
 			}
 			var l = o.length;
-			var i;
-			var str = "[";
+			var i1;
+			var str1 = "[";
 			s += "\t";
-			var _g = 0;
-			while(_g < l) {
-				var i1 = _g++;
-				str += (i1 > 0?",":"") + js.Boot.__string_rec(o[i1],s);
+			var _g2 = 0;
+			while(_g2 < l) {
+				var i2 = _g2++;
+				str1 += (i2 > 0?",":"") + js.Boot.__string_rec(o[i2],s);
 			}
-			str += "]";
-			return str;
+			str1 += "]";
+			return str1;
 		}
 		var tostr;
 		try {
@@ -245,22 +247,22 @@ js.Boot.__string_rec = function(o,s) {
 			if(s2 != "[object Object]") return s2;
 		}
 		var k = null;
-		var str = "{\n";
+		var str2 = "{\n";
 		s += "\t";
 		var hasp = o.hasOwnProperty != null;
-		for( var k in o ) { ;
+		for( var k in o ) {
 		if(hasp && !o.hasOwnProperty(k)) {
 			continue;
 		}
 		if(k == "prototype" || k == "__class__" || k == "__super__" || k == "__interfaces__" || k == "__properties__") {
 			continue;
 		}
-		if(str.length != 2) str += ", \n";
-		str += s + k + " : " + js.Boot.__string_rec(o[k],s);
+		if(str2.length != 2) str2 += ", \n";
+		str2 += s + k + " : " + js.Boot.__string_rec(o[k],s);
 		}
 		s = s.substring(1);
-		str += "\n" + s + "}";
-		return str;
+		str2 += "\n" + s + "}";
+		return str2;
 	case "function":
 		return "<function>";
 	case "string":
@@ -268,10 +270,10 @@ js.Boot.__string_rec = function(o,s) {
 	default:
 		return String(o);
 	}
-}
-var org = {}
-org.ascrypt = {}
-org.ascrypt.AES = function() { }
+};
+var org = {};
+org.ascrypt = {};
+org.ascrypt.AES = function() { };
 org.ascrypt.AES.__name__ = true;
 org.ascrypt.AES.encrypt = function(key,bytes,mode,iv) {
 	if(mode == null) mode = "ecb";
@@ -287,13 +289,13 @@ org.ascrypt.AES.encrypt = function(key,bytes,mode,iv) {
 	case org.ascrypt.common.OperationMode.CBC:
 		return org.ascrypt.utilities.CBC.encrypt(k,b,16,org.ascrypt.AES.ie,iv.slice());
 	case org.ascrypt.common.OperationMode.CTR:
-		return org.ascrypt.utilities.CTR.core(k,b,16,org.ascrypt.AES.ie,iv.slice());
+		return org.ascrypt.utilities.CTR.encrypt(k,b,16,org.ascrypt.AES.ie,iv.slice());
 	case org.ascrypt.common.OperationMode.NONE:
 		return org.ascrypt.AES.ie(k,b);
 	default:
 		throw org.ascrypt.AES.ERROR_MODE;
 	}
-}
+};
 org.ascrypt.AES.decrypt = function(key,bytes,mode,iv) {
 	if(mode == null) mode = "ecb";
 	org.ascrypt.AES.check(key,bytes);
@@ -308,13 +310,13 @@ org.ascrypt.AES.decrypt = function(key,bytes,mode,iv) {
 	case org.ascrypt.common.OperationMode.CBC:
 		return org.ascrypt.utilities.CBC.decrypt(k,b,16,org.ascrypt.AES.id,iv.slice());
 	case org.ascrypt.common.OperationMode.CTR:
-		return org.ascrypt.utilities.CTR.core(k,b,16,org.ascrypt.AES.ie,iv.slice());
+		return org.ascrypt.utilities.CTR.decrypt(k,b,16,org.ascrypt.AES.ie,iv.slice());
 	case org.ascrypt.common.OperationMode.NONE:
 		return org.ascrypt.AES.id(k,b);
 	default:
 		throw org.ascrypt.AES.ERROR_MODE;
 	}
-}
+};
 org.ascrypt.AES.init = function() {
 	org.ascrypt.AES.isrtab = new Array();
 	org.ascrypt.AES.isbox = new Array();
@@ -324,32 +326,32 @@ org.ascrypt.AES.init = function() {
 		var i = _g++;
 		org.ascrypt.AES.isbox[org.ascrypt.AES.sbox[i]] = i;
 	}
-	var _g = 0;
-	while(_g < 16) {
-		var j = _g++;
+	var _g1 = 0;
+	while(_g1 < 16) {
+		var j = _g1++;
 		org.ascrypt.AES.isrtab[org.ascrypt.AES.srtab[j]] = j;
 	}
-	var _g = 0;
-	while(_g < 128) {
-		var k = _g++;
+	var _g2 = 0;
+	while(_g2 < 128) {
+		var k = _g2++;
 		org.ascrypt.AES.xtime[k] = k << 1;
 		org.ascrypt.AES.xtime[128 + k] = k << 1 ^ 27;
 	}
-}
+};
 org.ascrypt.AES.sb = function(s,b) {
 	var _g = 0;
 	while(_g < 16) {
 		var i = _g++;
 		s[i] = b[s[i]];
 	}
-}
+};
 org.ascrypt.AES.ark = function(s,r) {
 	var _g = 0;
 	while(_g < 16) {
 		var i = _g++;
 		s[i] ^= r[i];
 	}
-}
+};
 org.ascrypt.AES.sr = function(s,t) {
 	var h = s.slice();
 	var _g = 0;
@@ -357,10 +359,11 @@ org.ascrypt.AES.sr = function(s,t) {
 		var i = _g++;
 		s[i] = h[t[i]];
 	}
-}
+};
 org.ascrypt.AES.ek = function(k) {
 	var kl = k.length;
-	var ks = 0, rcon = 1;
+	var ks = 0;
+	var rcon = 1;
 	switch(kl) {
 	case 16:
 		ks = 176;
@@ -386,10 +389,11 @@ org.ascrypt.AES.ek = function(k) {
 		}
 		i += 4;
 	}
-}
+};
 org.ascrypt.AES.ie = function(k,ob) {
 	var b = ob.slice();
-	var i = 16, l = k.length;
+	var i = 16;
+	var l = k.length;
 	org.ascrypt.AES.ark(b,k.slice(0,16));
 	while(i < l - 16) {
 		org.ascrypt.AES.sb(b,org.ascrypt.AES.sbox);
@@ -402,7 +406,7 @@ org.ascrypt.AES.ie = function(k,ob) {
 	org.ascrypt.AES.sr(b,org.ascrypt.AES.srtab);
 	org.ascrypt.AES.ark(b,k.slice(i,i + 16));
 	return b;
-}
+};
 org.ascrypt.AES.id = function(k,ob) {
 	var b = ob.slice();
 	var l = k.length;
@@ -419,12 +423,14 @@ org.ascrypt.AES.id = function(k,ob) {
 	}
 	org.ascrypt.AES.ark(b,k.slice(0,16));
 	return b;
-}
+};
 org.ascrypt.AES.mc = function(s) {
 	var i = 0;
 	while(i < 16) {
-		var s0 = s[i], s1 = s[i + 1];
-		var s2 = s[i + 2], s3 = s[i + 3];
+		var s0 = s[i];
+		var s1 = s[i + 1];
+		var s2 = s[i + 2];
+		var s3 = s[i + 3];
 		var h = s0 ^ s1 ^ s2 ^ s3;
 		s[i] ^= h ^ org.ascrypt.AES.xtime[s0 ^ s1];
 		s[i + 1] ^= h ^ org.ascrypt.AES.xtime[s1 ^ s2];
@@ -432,12 +438,14 @@ org.ascrypt.AES.mc = function(s) {
 		s[i + 3] ^= h ^ org.ascrypt.AES.xtime[s3 ^ s0];
 		i += 4;
 	}
-}
+};
 org.ascrypt.AES.mci = function(s) {
 	var i = 0;
 	while(i < 16) {
-		var s0 = s[i], s1 = s[i + 1];
-		var s2 = s[i + 2], s3 = s[i + 3];
+		var s0 = s[i];
+		var s1 = s[i + 1];
+		var s2 = s[i + 2];
+		var s3 = s[i + 3];
 		var h = s0 ^ s1 ^ s2 ^ s3;
 		var xh = org.ascrypt.AES.xtime[h];
 		var h1 = org.ascrypt.AES.xtime[org.ascrypt.AES.xtime[xh ^ s0 ^ s2]] ^ h;
@@ -448,30 +456,34 @@ org.ascrypt.AES.mci = function(s) {
 		s[i + 3] ^= h2 ^ org.ascrypt.AES.xtime[s3 ^ s0];
 		i += 4;
 	}
-}
+};
 org.ascrypt.AES.check = function(k,b) {
 	var kl = k.length;
 	if(kl != 16 && kl != 24 && kl != 32) throw org.ascrypt.AES.ERROR_KEY;
 	if(b.length % 16 != 0) throw org.ascrypt.AES.ERROR_BLOCK;
-}
-org.ascrypt.ARC4 = function() { }
+};
+org.ascrypt.ARC4 = function() { };
 org.ascrypt.ARC4.__name__ = true;
 org.ascrypt.ARC4.encrypt = function(key,bytes,init) {
 	if(init == null) init = true;
 	org.ascrypt.ARC4.check(key);
 	return org.ascrypt.ARC4.core(key,bytes,init);
-}
+};
 org.ascrypt.ARC4.decrypt = function(key,bytes,init) {
 	if(init == null) init = true;
 	org.ascrypt.ARC4.check(key);
 	return org.ascrypt.ARC4.core(key,bytes,init);
-}
+};
 org.ascrypt.ARC4.core = function(k,b,n) {
 	if(n) org.ascrypt.ARC4.init(k);
 	var r = [];
-	var l = 0, j = 0;
-	var v, t, x;
-	var _g1 = 0, _g = b.length;
+	var l = 0;
+	var j = 0;
+	var v;
+	var t;
+	var x;
+	var _g1 = 0;
+	var _g = b.length;
 	while(_g1 < _g) {
 		var i = _g1++;
 		l = (l + 1) % 256;
@@ -484,34 +496,36 @@ org.ascrypt.ARC4.core = function(k,b,n) {
 		r[i] = b[i] ^ v;
 	}
 	return r;
-}
+};
 org.ascrypt.ARC4.init = function(k) {
 	var l = k.length;
-	var t, c = 0;
+	var t;
+	var c = 0;
 	var _g = 0;
 	while(_g < 256) {
 		var i = _g++;
 		org.ascrypt.ARC4.mkey[i] = k[i % l];
 		org.ascrypt.ARC4.sbox[i] = i;
 	}
-	var _g = 0;
-	while(_g < 256) {
-		var j = _g++;
+	var _g1 = 0;
+	while(_g1 < 256) {
+		var j = _g1++;
 		c = (c + org.ascrypt.ARC4.sbox[j] + org.ascrypt.ARC4.mkey[j]) % 256;
 		t = org.ascrypt.ARC4.sbox[j];
 		org.ascrypt.ARC4.sbox[j] = org.ascrypt.ARC4.sbox[c];
 		org.ascrypt.ARC4.sbox[c] = t;
 	}
-}
+};
 org.ascrypt.ARC4.check = function(k) {
 	var kl = k.length;
 	if(kl < 5 || kl > 16) throw org.ascrypt.ARC4.ERROR_KEY;
-}
-org.ascrypt.Base16 = function() { }
+};
+org.ascrypt.Base16 = function() { };
 org.ascrypt.Base16.__name__ = true;
 org.ascrypt.Base16.encode = function(bytes) {
 	var l = bytes.length;
-	var v, h = [];
+	var v;
+	var h = [];
 	var _g = 0;
 	while(_g < l) {
 		var i = _g++;
@@ -519,25 +533,32 @@ org.ascrypt.Base16.encode = function(bytes) {
 		if(v.length < 2) h[i] = "0" + v; else h[i] = v;
 	}
 	return h.join("");
-}
+};
 org.ascrypt.Base16.decode = function(text) {
 	var i = 0;
 	var l = text.length;
-	var v, b = [];
+	var v;
+	var b = [];
 	while(i < l) {
 		v = HxOverrides.substr(text,i,2);
 		b[i / 2 | 0] = Std.parseInt("0x" + v);
 		i += 2;
 	}
 	return b;
-}
-org.ascrypt.Base64 = function() { }
+};
+org.ascrypt.Base64 = function() { };
 org.ascrypt.Base64.__name__ = true;
 org.ascrypt.Base64.encode = function(bytes) {
 	var l = bytes.length;
-	var c1 = 0, c2 = 0, c3 = 0;
-	var e1 = 0, e2 = 0, e3 = 0, e4 = 0;
-	var i = 0, t = "";
+	var c1 = 0;
+	var c2 = 0;
+	var c3 = 0;
+	var e1 = 0;
+	var e2 = 0;
+	var e3 = 0;
+	var e4 = 0;
+	var i = 0;
+	var t = "";
 	while(i < l) {
 		c1 = bytes[i++];
 		c2 = bytes[i++];
@@ -547,18 +568,24 @@ org.ascrypt.Base64.encode = function(bytes) {
 		e3 = (c2 & 15) << 2 | c3 >> 6;
 		e4 = c3 & 63;
 		t += org.ascrypt.Base64.chrs.charAt(e1) + org.ascrypt.Base64.chrs.charAt(e2);
-		if(i < l) t += org.ascrypt.Base64.chrs.charAt(e3);
-		if(i < l) t += org.ascrypt.Base64.chrs.charAt(e4);
+		if(i <= l) t += org.ascrypt.Base64.chrs.charAt(e3);
+		if(i <= l) t += org.ascrypt.Base64.chrs.charAt(e4);
 	}
 	if(Math.isNaN(c2)) t += "=";
 	if(Math.isNaN(c3)) t += "=";
 	return t;
-}
+};
 org.ascrypt.Base64.decode = function(text) {
 	var l = text.length;
-	var c1 = 0, c2 = 0, c3 = 0;
-	var e1 = 0, e2 = 0, e3 = 0, e4 = 0;
-	var i = 0, b = [];
+	var c1 = 0;
+	var c2 = 0;
+	var c3 = 0;
+	var e1 = 0;
+	var e2 = 0;
+	var e3 = 0;
+	var e4 = 0;
+	var i = 0;
+	var b = [];
 	while(i < l) {
 		e1 = org.ascrypt.Base64.chrs.indexOf(text.charAt(i++));
 		e2 = org.ascrypt.Base64.chrs.indexOf(text.charAt(i++));
@@ -572,11 +599,12 @@ org.ascrypt.Base64.decode = function(text) {
 		if(e4 != 64) b.push(c3);
 	}
 	return b;
-}
-org.ascrypt.GUID = function() { }
+};
+org.ascrypt.GUID = function() { };
 org.ascrypt.GUID.__name__ = true;
 org.ascrypt.GUID.create = function() {
-	var s, b = [];
+	var s;
+	var b = [];
 	var _g = 0;
 	while(_g < 128) {
 		var i = _g++;
@@ -584,7 +612,7 @@ org.ascrypt.GUID.create = function() {
 	}
 	s = org.ascrypt.Base16.encode(org.ascrypt.MD5.compute(b));
 	return org.ascrypt.GUID.format(s);
-}
+};
 org.ascrypt.GUID.format = function(s) {
 	var p = [];
 	p[0] = HxOverrides.substr(s,0,8);
@@ -593,21 +621,24 @@ org.ascrypt.GUID.format = function(s) {
 	p[3] = HxOverrides.substr(s,16,4);
 	p[4] = HxOverrides.substr(s,20,12);
 	return p.join("-");
-}
-org.ascrypt.MD5 = function() { }
+};
+org.ascrypt.MD5 = function() { };
 org.ascrypt.MD5.__name__ = true;
 org.ascrypt.MD5.compute = function(bytes) {
 	var b = org.ascrypt.utilities.UTIL.pack(bytes,null);
 	return org.ascrypt.utilities.UTIL.unpack(org.ascrypt.MD5.core(b,bytes.length * 8),null);
-}
+};
 org.ascrypt.MD5.computeHMAC = function(key,bytes) {
 	return org.ascrypt.utilities.HMAC.compute(key,bytes,org.ascrypt.MD5.compute,64);
-}
+};
 org.ascrypt.MD5.core = function(x,l) {
 	x[l >> 5] |= 128 << l % 32;
 	x[(l + 64 >>> 9 << 4) + 14] = l;
-	var a = 1732584193, b = -271733879;
-	var i = 0, c = -1732584194, d = 271733878;
+	var a = 1732584193;
+	var b = -271733879;
+	var i = 0;
+	var c = -1732584194;
+	var d = 271733878;
 	while(i < x.length) {
 		x[i] |= 0;
 		x[i + 1] |= 0;
@@ -625,8 +656,10 @@ org.ascrypt.MD5.core = function(x,l) {
 		x[i + 13] |= 0;
 		x[i + 14] |= 0;
 		x[i + 15] |= 0;
-		var olda = a, oldb = b;
-		var oldc = c, oldd = d;
+		var olda = a;
+		var oldb = b;
+		var oldc = c;
+		var oldd = d;
 		a = org.ascrypt.MD5.rol(a + (b & c | ~b & d) + x[i] + -680876936,7) + b;
 		d = org.ascrypt.MD5.rol(d + (a & b | ~a & c) + x[i + 1] + -389564586,12) + a;
 		c = org.ascrypt.MD5.rol(c + (d & a | ~d & b) + x[i + 2] + 606105819,17) + d;
@@ -698,43 +731,55 @@ org.ascrypt.MD5.core = function(x,l) {
 		i += 16;
 	}
 	return [a,b,c,d];
-}
+};
 org.ascrypt.MD5.cmn = function(q,a,b,x,s,t) {
 	return org.ascrypt.MD5.rol(a + q + x + t,s) + b;
-}
+};
 org.ascrypt.MD5.ff = function(a,b,c,d,x,s,t) {
 	return org.ascrypt.MD5.rol(a + (b & c | ~b & d) + x + t,s) + b;
-}
+};
 org.ascrypt.MD5.gg = function(a,b,c,d,x,s,t) {
 	return org.ascrypt.MD5.rol(a + (b & d | c & ~d) + x + t,s) + b;
-}
+};
 org.ascrypt.MD5.hh = function(a,b,c,d,x,s,t) {
 	return org.ascrypt.MD5.rol(a + (b ^ c ^ d) + x + t,s) + b;
-}
+};
 org.ascrypt.MD5.ii = function(a,b,c,d,x,s,t) {
 	return org.ascrypt.MD5.rol(a + (c ^ (b | ~d)) + x + t,s) + b;
-}
+};
 org.ascrypt.MD5.rol = function(n,c) {
 	return n << c | n >>> 32 - c;
-}
-org.ascrypt.RMD160 = function() { }
+};
+org.ascrypt.RMD160 = function() { };
 org.ascrypt.RMD160.__name__ = true;
 org.ascrypt.RMD160.compute = function(bytes) {
 	var b = org.ascrypt.utilities.UTIL.pack(bytes,null);
 	return org.ascrypt.utilities.UTIL.unpack(org.ascrypt.RMD160.core(b,bytes.length * 8),null);
-}
+};
 org.ascrypt.RMD160.computeHMAC = function(key,bytes) {
 	return org.ascrypt.utilities.HMAC.compute(key,bytes,org.ascrypt.RMD160.compute,64);
-}
+};
 org.ascrypt.RMD160.core = function(x,l) {
 	x[l >> 5] |= 128 << l % 32;
 	x[(l + 64 >>> 9 << 4) + 14] = l;
-	var i = 0, h0 = 1732584193, h1 = -271733879;
-	var h2 = -1732584194, h3 = 271733878, h4 = -1009589776;
+	var i = 0;
+	var h0 = 1732584193;
+	var h1 = -271733879;
+	var h2 = -1732584194;
+	var h3 = 271733878;
+	var h4 = -1009589776;
 	while(i < x.length) {
-		var t, a1 = h0, b1 = h1, c1 = h2;
-		var d1 = h3, e1 = h4, a2 = h0, b2 = h1;
-		var c2 = h2, d2 = h3, e2 = h4;
+		var t;
+		var a1 = h0;
+		var b1 = h1;
+		var c1 = h2;
+		var d1 = h3;
+		var e1 = h4;
+		var a2 = h0;
+		var b2 = h1;
+		var c2 = h2;
+		var d2 = h3;
+		var e2 = h4;
 		var _g = 0;
 		while(_g < 80) {
 			var j = _g++;
@@ -766,35 +811,37 @@ org.ascrypt.RMD160.core = function(x,l) {
 		i += 16;
 	}
 	return [h0,h1,h2,h3,h4];
-}
+};
 org.ascrypt.RMD160.f = function(j,x,y,z) {
-	return 0 <= j && j <= 15?x ^ y ^ z:16 <= j && j <= 31?x & y | ~x & z:32 <= j && j <= 47?(x | ~y) ^ z:48 <= j && j <= 63?x & z | y & ~z:64 <= j && j <= 79?x ^ (y | ~z):Math.NEGATIVE_INFINITY | 0;
-}
+	if(0 <= j && j <= 15) return x ^ y ^ z; else if(16 <= j && j <= 31) return x & y | ~x & z; else if(32 <= j && j <= 47) return (x | ~y) ^ z; else if(48 <= j && j <= 63) return x & z | y & ~z; else if(64 <= j && j <= 79) return x ^ (y | ~z); else return Math.NEGATIVE_INFINITY | 0;
+};
 org.ascrypt.RMD160.k1 = function(j) {
-	return 0 <= j && j <= 15?0:16 <= j && j <= 31?1518500249:32 <= j && j <= 47?1859775393:48 <= j && j <= 63?-1894007588:64 <= j && j <= 79?-1454113458:Math.NEGATIVE_INFINITY | 0;
-}
+	if(0 <= j && j <= 15) return 0; else if(16 <= j && j <= 31) return 1518500249; else if(32 <= j && j <= 47) return 1859775393; else if(48 <= j && j <= 63) return -1894007588; else if(64 <= j && j <= 79) return -1454113458; else return Math.NEGATIVE_INFINITY | 0;
+};
 org.ascrypt.RMD160.k2 = function(j) {
-	return 0 <= j && j <= 15?1352829926:16 <= j && j <= 31?1548603684:32 <= j && j <= 47?1836072691:48 <= j && j <= 63?2053994217:64 <= j && j <= 79?0:Math.NEGATIVE_INFINITY | 0;
-}
+	if(0 <= j && j <= 15) return 1352829926; else if(16 <= j && j <= 31) return 1548603684; else if(32 <= j && j <= 47) return 1836072691; else if(48 <= j && j <= 63) return 2053994217; else if(64 <= j && j <= 79) return 0; else return Math.NEGATIVE_INFINITY | 0;
+};
 org.ascrypt.RMD160.add = function(x,y) {
 	var l = (x & 65535) + (y & 65535);
 	var m = (x >> 16) + (y >> 16) + (l >> 16);
 	return m << 16 | l & 65535;
-}
+};
 org.ascrypt.RMD160.rol = function(n,c) {
 	return n << c | n >>> 32 - c;
-}
-org.ascrypt.ROT13 = function() { }
+};
+org.ascrypt.ROT13 = function() { };
 org.ascrypt.ROT13.__name__ = true;
 org.ascrypt.ROT13.encode = function(bytes) {
 	return org.ascrypt.ROT13.core(bytes);
-}
+};
 org.ascrypt.ROT13.decode = function(bytes) {
 	return org.ascrypt.ROT13.core(bytes);
-}
+};
 org.ascrypt.ROT13.core = function(b) {
-	var c, r = [];
-	var p, l = b.length;
+	var c;
+	var r = [];
+	var p;
+	var l = b.length;
 	var _g = 0;
 	while(_g < l) {
 		var i = _g++;
@@ -803,26 +850,33 @@ org.ascrypt.ROT13.core = function(b) {
 		if(p > -1) r[i] = HxOverrides.cca(org.ascrypt.ROT13.chrs,p + 13); else r[i] = b[i];
 	}
 	return r;
-}
-org.ascrypt.SHA1 = function() { }
+};
+org.ascrypt.SHA1 = function() { };
 org.ascrypt.SHA1.__name__ = true;
 org.ascrypt.SHA1.compute = function(bytes) {
 	var b = org.ascrypt.utilities.UTIL.pack(bytes,false);
 	return org.ascrypt.utilities.UTIL.unpack(org.ascrypt.SHA1.core(b,bytes.length * 8),false);
-}
+};
 org.ascrypt.SHA1.computeHMAC = function(key,bytes) {
 	return org.ascrypt.utilities.HMAC.compute(key,bytes,org.ascrypt.SHA1.compute,64);
-}
+};
 org.ascrypt.SHA1.core = function(x,l) {
 	x[l >> 5] |= 128 << 24 - l % 32;
 	x[(l + 64 >> 9 << 4) + 15] = l;
-	var i = 0, w = [], a = 1732584193;
-	var b = -271733879, c = -1732584194;
-	var d = 271733878, e = -1009589776;
+	var i = 0;
+	var w = [];
+	var a = 1732584193;
+	var b = -271733879;
+	var c = -1732584194;
+	var d = 271733878;
+	var e = -1009589776;
 	var i1 = 0;
 	while(i1 < x.length) {
-		var olda = a, oldb = b;
-		var oldc = c, oldd = d, olde = e;
+		var olda = a;
+		var oldb = b;
+		var oldc = c;
+		var oldd = d;
+		var olde = e;
 		var _g = 0;
 		while(_g < 80) {
 			var j = _g++;
@@ -842,37 +896,46 @@ org.ascrypt.SHA1.core = function(x,l) {
 		i1 += 16;
 	}
 	return [a,b,c,d,e];
-}
+};
 org.ascrypt.SHA1.ft = function(t,b,c,d) {
 	if(t < 20) return b & c | ~b & d;
 	if(t < 40) return b ^ c ^ d;
 	if(t < 60) return b & c | b & d | c & d;
 	return b ^ c ^ d;
-}
+};
 org.ascrypt.SHA1.kt = function(t) {
-	return t < 20?1518500249:t < 40?1859775393:t < 60?-1894007588:-899497514;
-}
+	if(t < 20) return 1518500249; else if(t < 40) return 1859775393; else if(t < 60) return -1894007588; else return -899497514;
+};
 org.ascrypt.SHA1.rol = function(n,c) {
 	return n << c | n >>> 32 - c;
-}
+};
 org.ascrypt.SHA1.add = function(one,two) {
 	var l = (one & 65535) + (two & 65535);
 	var m = (one >> 16) + (two >> 16) + (l >> 16);
 	return m << 16 | l & 65535;
-}
-org.ascrypt.SHA256 = function() { }
+};
+org.ascrypt.SHA256 = function() { };
 org.ascrypt.SHA256.__name__ = true;
 org.ascrypt.SHA256.compute = function(bytes) {
 	var b = org.ascrypt.utilities.UTIL.pack(bytes,false);
 	return org.ascrypt.utilities.UTIL.unpack(org.ascrypt.SHA256.core(b,bytes.length * 8),false);
-}
+};
 org.ascrypt.SHA256.computeHMAC = function(key,bytes) {
 	return org.ascrypt.utilities.HMAC.compute(key,bytes,org.ascrypt.SHA256.compute,64);
-}
+};
 org.ascrypt.SHA256.core = function(m,l) {
-	var a, b, c, d;
-	var e, f, g, h, i = 0;
-	var t1, t2, w = new Array();
+	var a;
+	var b;
+	var c;
+	var d;
+	var e;
+	var f;
+	var g;
+	var h;
+	var i = 0;
+	var t1;
+	var t2;
+	var w = new Array();
 	var k = [1116352408,1899447441,-1245643825,-373957723,961987163,1508970993,-1841331548,-1424204075,-670586216,310598401,607225278,1426881987,1925078388,-2132889090,-1680079193,-1046744716,-459576895,-272742522,264347078,604807628,770255983,1249150122,1555081692,1996064986,-1740746414,-1473132947,-1341970488,-1084653625,-958395405,-710438585,113926993,338241895,666307205,773529912,1294757372,1396182291,1695183700,1986661051,-2117940946,-1838011259,-1564481375,-1474664885,-1035236496,-949202525,-778901479,-694614492,-200395387,275423344,430227734,506948616,659060556,883997877,958139571,1322822218,1537002063,1747873779,1955562222,2024104815,-2067236844,-1933114872,-1866530822,-1538233109,-1090935817,-965641998];
 	var r = [1779033703,-1150833019,1013904242,-1521486534,1359893119,-1694144372,528734635,1541459225];
 	m[l >> 5] |= 128 << 24 - l % 32;
@@ -912,34 +975,34 @@ org.ascrypt.SHA256.core = function(m,l) {
 		i += 16;
 	}
 	return r;
-}
+};
 org.ascrypt.SHA256.s = function(x,n) {
 	return x >>> n | x << 32 - n;
-}
+};
 org.ascrypt.SHA256.ch = function(x,y,z) {
 	return x & y ^ ~x & z;
-}
+};
 org.ascrypt.SHA256.maj = function(x,y,z) {
 	return x & y ^ x & z ^ y & z;
-}
+};
 org.ascrypt.SHA256.s0256 = function(x) {
 	return (x >>> 2 | x << 30) ^ (x >>> 13 | x << 19) ^ (x >>> 22 | x << 10);
-}
+};
 org.ascrypt.SHA256.s1256 = function(x) {
 	return (x >>> 6 | x << 26) ^ (x >>> 11 | x << 21) ^ (x >>> 25 | x << 7);
-}
+};
 org.ascrypt.SHA256.g0256 = function(x) {
 	return (x >>> 7 | x << 25) ^ (x >>> 18 | x << 14) ^ x >>> 3;
-}
+};
 org.ascrypt.SHA256.g1256 = function(x) {
 	return (x >>> 17 | x << 15) ^ (x >>> 19 | x << 13) ^ x >>> 10;
-}
+};
 org.ascrypt.SHA256.add = function(one,two) {
 	var l = (one & 65535) + (two & 65535);
 	var m = (one >> 16) + (two >> 16) + (l >> 16);
 	return m << 16 | l & 65535;
-}
-org.ascrypt.XXTEA = function() { }
+};
+org.ascrypt.XXTEA = function() { };
 org.ascrypt.XXTEA.__name__ = true;
 org.ascrypt.XXTEA.encrypt = function(key,bytes) {
 	if(key.length != 16) throw org.ascrypt.XXTEA.ERROR_KEY;
@@ -948,8 +1011,13 @@ org.ascrypt.XXTEA.encrypt = function(key,bytes) {
 	var v = org.ascrypt.utilities.UTIL.pack(bytes,null);
 	if(v.length <= 1) v[1] = 0;
 	var n = v.length;
-	var z = v[n - 1], y = v[0], d = -1640531527;
-	var m, e, s = 0, q = Math.floor(6 + 52 / n);
+	var z = v[n - 1];
+	var y = v[0];
+	var d = -1640531527;
+	var m;
+	var e;
+	var s = 0;
+	var q = Math.floor(6 + 52 / n);
 	while(q-- > 0) {
 		s += d;
 		e = s >>> 2 & 3;
@@ -962,14 +1030,20 @@ org.ascrypt.XXTEA.encrypt = function(key,bytes) {
 		}
 	}
 	return org.ascrypt.utilities.UTIL.unpack(v,null);
-}
+};
 org.ascrypt.XXTEA.decrypt = function(key,bytes) {
 	if(key.length != 16) throw org.ascrypt.XXTEA.ERROR_KEY;
 	if(bytes.length < 8 || bytes.length % 4 != 0) throw org.ascrypt.XXTEA.ERROR_BLOCK;
 	var h = org.ascrypt.utilities.UTIL.pack(key,null);
 	var v = org.ascrypt.utilities.UTIL.pack(bytes,null);
-	var n = v.length, z = v[n - 1], y = v[0], d = -1640531527;
-	var m, e, q = Math.floor(6 + 52 / n), s = q * d;
+	var n = v.length;
+	var z = v[n - 1];
+	var y = v[0];
+	var d = -1640531527;
+	var m;
+	var e;
+	var q = Math.floor(6 + 52 / n);
+	var s = q * d;
 	while(s != 0) {
 		e = s >>> 2 & 3;
 		var i = n - 1;
@@ -982,64 +1056,72 @@ org.ascrypt.XXTEA.decrypt = function(key,bytes) {
 		s -= d;
 	}
 	return org.ascrypt.utilities.UTIL.unpack(v,null);
-}
+};
 org.ascrypt.XXTEA.check = function(k,b) {
 	if(k.length != 16) throw org.ascrypt.XXTEA.ERROR_KEY;
 	if(b.length < 8 || b.length % 4 != 0) throw org.ascrypt.XXTEA.ERROR_BLOCK;
-}
-org.ascrypt.common = {}
-org.ascrypt.common.OperationMode = function() { }
+};
+org.ascrypt.common = {};
+org.ascrypt.common.OperationMode = function() { };
 org.ascrypt.common.OperationMode.__name__ = true;
-org.ascrypt.encoding = {}
-org.ascrypt.encoding.BigEndian = function() { }
+org.ascrypt.encoding = {};
+org.ascrypt.encoding.BigEndian = function() { };
 org.ascrypt.encoding.BigEndian.__name__ = true;
 org.ascrypt.encoding.BigEndian.textToBytes = function(text) {
 	var b = [];
-	var i = 0, l = text.length * 2;
+	var i = 0;
+	var l = text.length * 2;
 	while(i < l) {
 		b[i] = HxOverrides.cca(text,i / 2 | 0) >>> 8 & 255;
 		b[i + 1] = HxOverrides.cca(text,i / 2 | 0) & 255;
 		i += 2;
 	}
 	return b;
-}
+};
 org.ascrypt.encoding.BigEndian.bytesToText = function(bytes) {
 	var l = bytes.length;
-	var c, i = 0, s = "";
+	var c;
+	var i = 0;
+	var s = "";
 	while(i < l) {
 		c = bytes[i] << 8 | bytes[i + 1] & 255;
 		s += String.fromCharCode(c);
 		i += 2;
 	}
 	return s;
-}
-org.ascrypt.encoding.LittleEndian = function() { }
+};
+org.ascrypt.encoding.LittleEndian = function() { };
 org.ascrypt.encoding.LittleEndian.__name__ = true;
 org.ascrypt.encoding.LittleEndian.textToBytes = function(text) {
 	var b = [];
-	var i = 0, l = text.length * 2;
+	var i = 0;
+	var l = text.length * 2;
 	while(i < l) {
 		b[i] = HxOverrides.cca(text,i / 2 | 0) & 255;
 		b[i + 1] = HxOverrides.cca(text,i / 2 | 0) >>> 8 & 255;
 		i += 2;
 	}
 	return b;
-}
+};
 org.ascrypt.encoding.LittleEndian.bytesToText = function(bytes) {
 	var l = bytes.length;
-	var c, i = 0, s = "";
+	var c;
+	var i = 0;
+	var s = "";
 	while(i < l) {
 		c = bytes[i] & 255 | bytes[i + 1] << 8;
 		s += String.fromCharCode(c);
 		i += 2;
 	}
 	return s;
-}
-org.ascrypt.encoding.UTF8 = function() { }
+};
+org.ascrypt.encoding.UTF8 = function() { };
 org.ascrypt.encoding.UTF8.__name__ = true;
 org.ascrypt.encoding.UTF8.textToBytes = function(text) {
 	var l = text.length;
-	var c, p = 0, b = [];
+	var c;
+	var p = 0;
+	var b = [];
 	var _g = 0;
 	while(_g < l) {
 		var i = _g++;
@@ -1065,11 +1147,12 @@ org.ascrypt.encoding.UTF8.textToBytes = function(text) {
 		}
 	}
 	return b;
-}
+};
 org.ascrypt.encoding.UTF8.bytesToText = function(bytes) {
 	var i = 0;
 	var l = bytes.length;
-	var c, s = "";
+	var c;
+	var s = "";
 	while(i < l) {
 		c = 0;
 		if((bytes[i] & 128) != 128) c = bytes[i]; else if((bytes[i] & 240) == 240) {
@@ -1092,9 +1175,9 @@ org.ascrypt.encoding.UTF8.bytesToText = function(bytes) {
 		i++;
 	}
 	return s;
-}
-org.ascrypt.padding = {}
-org.ascrypt.padding.PKCS7 = function() { }
+};
+org.ascrypt.padding = {};
+org.ascrypt.padding.PKCS7 = function() { };
 org.ascrypt.padding.PKCS7.__name__ = true;
 org.ascrypt.padding.PKCS7.pad = function(bytes,size) {
 	var c = bytes.slice();
@@ -1105,33 +1188,34 @@ org.ascrypt.padding.PKCS7.pad = function(bytes,size) {
 		c[c.length] = s;
 	}
 	return c;
-}
+};
 org.ascrypt.padding.PKCS7.unpad = function(bytes) {
 	var c = bytes.slice();
-	var v, s = c[c.length - 1];
+	var v;
+	var s = c[c.length - 1];
 	var _g = 0;
 	while(_g < s) {
 		var i = _g++;
 		v = c[c.length - 1];
 		c.pop();
-		if(s != v) throw org.ascrypt.utilities.UTIL.format(org.ascrypt.padding.PKCS7.ERROR_VALUE,[Std.string(v),Std.string(s)]);
+		if(s != v) throw org.ascrypt.utilities.UTIL.format(org.ascrypt.padding.PKCS7.ERROR_VALUE,[v == null?"null":"" + v,s == null?"null":"" + s]);
 	}
 	return c;
-}
-org.ascrypt.padding.ZEROS = function() { }
+};
+org.ascrypt.padding.ZEROS = function() { };
 org.ascrypt.padding.ZEROS.__name__ = true;
 org.ascrypt.padding.ZEROS.pad = function(bytes,size) {
 	var c = bytes.slice();
 	while(c.length % size != 0) c[c.length] = 0;
 	return c;
-}
+};
 org.ascrypt.padding.ZEROS.unpad = function(bytes) {
 	var c = bytes.slice();
 	while(c[c.length - 1] == 0) c.pop();
 	return c;
-}
-org.ascrypt.utilities = {}
-org.ascrypt.utilities.CBC = function() { }
+};
+org.ascrypt.utilities = {};
+org.ascrypt.utilities.CBC = function() { };
 org.ascrypt.utilities.CBC.__name__ = true;
 org.ascrypt.utilities.CBC.encrypt = function(key,bytes,size,encrypt,iv) {
 	var r = [];
@@ -1148,10 +1232,11 @@ org.ascrypt.utilities.CBC.encrypt = function(key,bytes,size,encrypt,iv) {
 		i += size;
 	}
 	return r;
-}
+};
 org.ascrypt.utilities.CBC.decrypt = function(key,bytes,size,decrypt,iv) {
 	var l = bytes.length;
-	var t, r = [];
+	var t;
+	var r = [];
 	var i = 0;
 	while(i < l) {
 		t = bytes.slice(i,i + size);
@@ -1165,18 +1250,19 @@ org.ascrypt.utilities.CBC.decrypt = function(key,bytes,size,decrypt,iv) {
 		i += size;
 	}
 	return r;
-}
-org.ascrypt.utilities.CTR = function() { }
+};
+org.ascrypt.utilities.CTR = function() { };
 org.ascrypt.utilities.CTR.__name__ = true;
 org.ascrypt.utilities.CTR.encrypt = function(key,bytes,size,encrypt,iv) {
 	return org.ascrypt.utilities.CTR.core(key,bytes,size,encrypt,iv);
-}
+};
 org.ascrypt.utilities.CTR.decrypt = function(key,bytes,size,encrypt,iv) {
 	return org.ascrypt.utilities.CTR.core(key,bytes,size,encrypt,iv);
-}
+};
 org.ascrypt.utilities.CTR.core = function(k,b,s,c,v) {
 	var bl = b.length;
-	var e = [], x = v.slice();
+	var e = [];
+	var x = v.slice();
 	var i = 0;
 	while(i < bl) {
 		e = c(k,x);
@@ -1194,15 +1280,15 @@ org.ascrypt.utilities.CTR.core = function(k,b,s,c,v) {
 		i += s;
 	}
 	return b;
-}
-org.ascrypt.utilities.ECB = function() { }
+};
+org.ascrypt.utilities.ECB = function() { };
 org.ascrypt.utilities.ECB.__name__ = true;
 org.ascrypt.utilities.ECB.encrypt = function(key,bytes,size,encrypt) {
 	return org.ascrypt.utilities.ECB.core(key,bytes,size,encrypt);
-}
+};
 org.ascrypt.utilities.ECB.decrypt = function(key,bytes,size,decrypt) {
 	return org.ascrypt.utilities.ECB.core(key,bytes,size,decrypt);
-}
+};
 org.ascrypt.utilities.ECB.core = function(k,b,s,c) {
 	var r = [];
 	var l = b.length;
@@ -1212,12 +1298,13 @@ org.ascrypt.utilities.ECB.core = function(k,b,s,c) {
 		i += s;
 	}
 	return r;
-}
-org.ascrypt.utilities.HMAC = function() { }
+};
+org.ascrypt.utilities.HMAC = function() { };
 org.ascrypt.utilities.HMAC.__name__ = true;
 org.ascrypt.utilities.HMAC.compute = function(key,bytes,hash,size) {
 	var hk = key.slice();
-	var ik = [], ok = [];
+	var ik = [];
+	var ok = [];
 	if(key.length > size) hk = hash(key);
 	while(hk.length < size) hk[hk.length] = 0;
 	var hkl = hk.length;
@@ -1230,14 +1317,18 @@ org.ascrypt.utilities.HMAC.compute = function(key,bytes,hash,size) {
 	ik = ik.concat(bytes);
 	ok = ok.concat(hash(ik));
 	return hash(ok);
-}
-org.ascrypt.utilities.UTIL = function() { }
+};
+org.ascrypt.utilities.UTIL = function() { };
 org.ascrypt.utilities.UTIL.__name__ = true;
 org.ascrypt.utilities.UTIL.pack = function(bytes,little) {
 	if(little == null) little = true;
 	var w = [];
 	var l = bytes.length;
-	var b1 = 0, b2 = 0, b3 = 0, b4 = 0, i = 0;
+	var b1 = 0;
+	var b2 = 0;
+	var b3 = 0;
+	var b4 = 0;
+	var i = 0;
 	while(i < l) {
 		if(little) {
 			b1 = bytes[i];
@@ -1254,12 +1345,15 @@ org.ascrypt.utilities.UTIL.pack = function(bytes,little) {
 		i += 4;
 	}
 	return w;
-}
+};
 org.ascrypt.utilities.UTIL.unpack = function(words,little) {
 	if(little == null) little = true;
 	var b = [];
 	var l = words.length;
-	var b1, b2, b3, b4;
+	var b1;
+	var b2;
+	var b3;
+	var b4;
 	var _g = 0;
 	while(_g < l) {
 		var i = _g++;
@@ -1282,7 +1376,7 @@ org.ascrypt.utilities.UTIL.unpack = function(words,little) {
 		b[i * 4 + 3] = b4;
 	}
 	return b;
-}
+};
 org.ascrypt.utilities.UTIL.format = function(string,args) {
 	var l = args.length;
 	var _g = 0;
@@ -1292,16 +1386,15 @@ org.ascrypt.utilities.UTIL.format = function(string,args) {
 		string = parts.join(args[i]);
 	}
 	return string;
-}
-Math.__name__ = ["Math"];
+};
 Math.NaN = Number.NaN;
 Math.NEGATIVE_INFINITY = Number.NEGATIVE_INFINITY;
 Math.POSITIVE_INFINITY = Number.POSITIVE_INFINITY;
 Math.isFinite = function(i) {
 	return isFinite(i);
 };
-Math.isNaN = function(i) {
-	return isNaN(i);
+Math.isNaN = function(i1) {
+	return isNaN(i1);
 };
 String.__name__ = true;
 Array.__name__ = true;

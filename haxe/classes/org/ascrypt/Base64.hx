@@ -33,8 +33,8 @@ class Base64
 			e3 = ((c2 & 15) << 2) | (c3 >> 6);
 			e4 = c3 & 63;
 			t += chrs.charAt(e1) + chrs.charAt(e2);
-			if (i < l) t += chrs.charAt(e3);
-			if (i < l) t += chrs.charAt(e4);
+			if (i <= l) t += chrs.charAt(e3);
+			if (i <= l) t += chrs.charAt(e4);
 		}
 		#if (flash8 || js)
 		if (Math.isNaN(c2)) t += "=";
