@@ -1,4 +1,4 @@
-Copyright (c) 2013 Mika Palmu - ASCrypt.org
+Copyright (c) 2013-2015 Mika Palmu - ASCrypt.org
 
 Portions copyright:
 
